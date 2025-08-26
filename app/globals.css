@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand Colors */
+  --primary: 210 100% 27%; /* #0057B8 - Primary Blue */
+  --primary-foreground: 0 0% 100%; /* White text on primary */
+  --secondary: 45 100% 50%; /* #FFBF00 - Yellow accent */
+  --secondary-foreground: 0 0% 0%; /* Black text on secondary */
+  --accent: 0 72% 51%; /* #D22B2B - Red accent for emergency/alerts */
+  --accent-foreground: 0 0% 100%; /* White text on accent */
+
+  /* Neutral Colors */
+  --background: 0 0% 100%; /* White background */
+  --foreground: 0 0% 10%; /* Near black text */
+  --muted: 210 40% 96%; /* Light blue-gray for muted areas */
+  --muted-foreground: 215 16% 47%; /* Darker blue-gray for muted text */
+
+  /* UI Colors */
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 10%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+
+  /* Semantic Colors */
+  --success: 142 71% 45%;
+  --success-foreground: 0 0% 100%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 0%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* Radius and Shadows */
+  --radius: 0.5rem;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold text-primary tracking-tight;
+  }
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+  }
+  h3 {
+    @apply text-xl md:text-2xl;
+  }
+  h4 {
+    @apply text-lg md:text-xl;
+  }
+  p {
+    @apply leading-relaxed;
+  }
+  section {
+    @apply py-12 md:py-16 lg:py-24;
+  }
+}
+
+@layer components {
+  .container {
+    @apply px-4 mx-auto max-w-7xl;
+  }
+
+  /* Card styles */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg;
+  }
+
+  /* Section styles */
+  .section-title {
+    @apply text-center mb-12;
+  }
+
+  /* Accessibility */
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  }
+
+  /* Progressive disclosure for mobile */
+  .disclosure-content {
+    @apply max-h-0 overflow-hidden transition-all duration-300 ease-in-out;
+  }
+  .disclosure-content.open {
+    @apply max-h-screen;
+  }
+
+  /* Mobile-first spacing */
+  .mobile-stack > * + * {
+    @apply mt-4 md:mt-0;
+  }
+
+  /* Focus styles for accessibility */
+  .focus-visible:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2;
+  }
+}

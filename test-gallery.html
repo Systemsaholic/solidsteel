@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Gallery Modal</title>
+    <script>
+        // Open the page and check console for errors
+        window.onload = function() {
+            console.log("Opening project page...");
+            fetch('http://localhost:3005/projects/greystone-village-retirement')
+                .then(response => response.text())
+                .then(html => {
+                    // Check if GalleryModal is in the bundle
+                    if (html.includes('GalleryModal')) {
+                        console.log('✓ GalleryModal component found in bundle');
+                    } else {
+                        console.log('✗ GalleryModal component NOT found in bundle');
+                    }
+                    
+                    // Check if Expand icon is present
+                    if (html.includes('Expand') || html.includes('expand')) {
+                        console.log('✓ Expand icon found');
+                    } else {
+                        console.log('✗ Expand icon NOT found');
+                    }
+                    
+                    // Check if project content is loaded
+                    if (html.includes('Project Gallery')) {
+                        console.log('✓ Project content loaded');
+                    } else {
+                        console.log('✗ Project content NOT loaded - page may be stuck in loading state');
+                    }
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>Gallery Modal Test</h1>
+    <p>Check the browser console for results</p>
+    <p>Then navigate to: <a href="http://localhost:3005/projects/greystone-village-retirement" target="_blank">Project Page</a></p>
+</body>
+</html>

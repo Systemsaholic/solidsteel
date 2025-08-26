@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Gallery Modal</title>
+</head>
+<body>
+    <h1>Gallery Modal Debug</h1>
+    <p>Visit: <a href="http://localhost:3005/projects/pro-xcavation-headquarters" target="_blank">Pro-Xcavation Project</a></p>
+    
+    <h2>Browser Console Tests:</h2>
+    <pre>
+// After page loads, run these in console:
+
+// 1. Check if React is loaded
+console.log('React loaded:', typeof window.React);
+
+// 2. Check for clickable elements
+const clickables = document.querySelectorAll('.cursor-pointer');
+console.log('Clickable elements found:', clickables.length);
+
+// 3. Check for images
+const images = document.querySelectorAll('img');
+console.log('Images found:', images.length);
+images.forEach((img, i) => console.log(`Image ${i}:`, img.src));
+
+// 4. Check for modal in DOM
+const dialogs = document.querySelectorAll('[role="dialog"]');
+console.log('Dialog elements:', dialogs.length);
+
+// 5. Try to click the first image manually
+const firstImage = document.querySelector('.group');
+if (firstImage) {
+    console.log('Found group element, clicking...');
+    firstImage.click();
+} else {
+    console.log('No group element found');
+}
+
+// 6. Check for hydration errors
+if (window.__NEXT_DATA__) {
+    console.log('Next.js data found');
+    console.log('Build ID:', window.__NEXT_DATA__.buildId);
+}
+    </pre>
+    
+    <h2>Alternative Test Page:</h2>
+    <p>Visit: <a href="http://localhost:3005/test-gallery" target="_blank">Test Gallery Page</a></p>
+    <p>This page has a simpler implementation to test if the modal works at all.</p>
+</body>
+</html>

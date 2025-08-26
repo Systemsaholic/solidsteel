@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Test</title>
+</head>
+<body>
+    <h1>Homepage Video Test</h1>
+    
+    <h2>Instructions:</h2>
+    <ol>
+        <li>Open browser developer tools (F12)</li>
+        <li>Go to Console tab</li>
+        <li>Visit the homepage: <a href="http://localhost:3005" target="_blank">Homepage</a></li>
+        <li>Check for any video-related errors in console</li>
+        <li>Check Network tab to see if video is loading</li>
+    </ol>
+    
+    <h2>What you should see:</h2>
+    <ul>
+        <li>A background video playing automatically in the hero section</li>
+        <li>Video should be muted and looping</li>
+        <li>If video fails, it should fall back to the static image</li>
+        <li>In development mode, you'll see a status indicator in top-right corner</li>
+    </ul>
+    
+    <h2>Test Video Sources:</h2>
+    <p>Primary (Blob Storage):</p>
+    <video width="400" controls muted>
+        <source src="https://5v8oej1w91asigpe.public.blob.vercel-storage.com/video/builders-on-the-construction-2023-11-27-05-02-01-utc.mp4" type="video/mp4">
+    </video>
+    
+    <p>Fallback (Pixabay):</p>
+    <video width="400" controls muted>
+        <source src="https://cdn.pixabay.com/video/2021/08/05/84326-589325522_large.mp4" type="video/mp4">
+    </video>
+    
+    <h2>Debug in Console:</h2>
+    <pre>
+// Check if video element exists
+console.log('Video element:', document.querySelector('video'));
+
+// Check video properties
+const video = document.querySelector('video');
+if (video) {
+    console.log('Video source:', video.currentSrc);
+    console.log('Video ready state:', video.readyState);
+    console.log('Video network state:', video.networkState);
+    console.log('Video error:', video.error);
+}
+    </pre>
+</body>
+</html>

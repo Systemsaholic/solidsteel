@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Gallery Modal</title>
+</head>
+<body>
+    <h1>Gallery Modal Test Instructions</h1>
+    <ol>
+        <li>Open browser developer tools (F12)</li>
+        <li>Go to Console tab</li>
+        <li>Visit the project page: <a href="http://localhost:3005/projects/greystone-village-retirement" target="_blank">Greystone Village Project</a></li>
+        <li>Wait for page to load (you should see project content, not "Loading...")</li>
+        <li>Look for any console errors</li>
+        <li>Try clicking on the main hero image</li>
+        <li>Try clicking on gallery images below</li>
+    </ol>
+    
+    <h2>What should happen:</h2>
+    <ul>
+        <li>Images should show an expand icon on hover</li>
+        <li>Clicking an image should open a fullscreen modal</li>
+        <li>Modal should have previous/next navigation</li>
+        <li>ESC key or clicking outside should close modal</li>
+    </ul>
+    
+    <h2>Debugging Steps:</h2>
+    <p>In browser console, run:</p>
+    <pre>
+// Check if React is loaded
+console.log('React loaded:', typeof React !== 'undefined');
+
+// Check for gallery elements
+console.log('Gallery images found:', document.querySelectorAll('.cursor-pointer.group').length);
+
+// Check for modal in DOM
+console.log('Dialog elements:', document.querySelectorAll('[role="dialog"]').length);
+    </pre>
+</body>
+</html>
