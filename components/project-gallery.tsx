@@ -313,17 +313,26 @@ interface ProjectListCardProps {
 }
 
 function ProjectListCard({ project, onNavigate }: ProjectListCardProps) {
-  const { heroImage, isLoading } = useProjectImages(project.slug)
-  // Prioritize blob storage images over static fallbacks
-  const imageSource = heroImage || project.image || "/placeholder.svg?height=300&width=400&query=construction project"
+  const { heroImage, isLoading, error } = useProjectImages(project.slug)
+  // Only use blob storage images - no fallbacks
+  const imageSource = heroImage
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-all duration-300">
       <div className="flex flex-col md:flex-row">
         <div className="md:w-1/3 h-48 md:h-auto overflow-hidden">
           {isLoading ? (
-            <div className="w-full h-full bg-gray-200 animate-pulse" />
-          ) : (
+            <div className="w-full h-full bg-gray-200 animate-pulse flex items-center justify-center">
+              <span className="text-gray-500">Loading from Blob Storage...</span>
+            </div>
+          ) : error ? (
+            <div className="w-full h-full bg-red-100 flex items-center justify-center">
+              <div className="text-center p-4">
+                <span className="text-red-600 text-sm">Failed to load image</span>
+                <div className="text-xs text-red-500 mt-1">{error}</div>
+              </div>
+            </div>
+          ) : imageSource ? (
             <img
               src={imageSource}
               alt={project.title}
@@ -332,6 +341,10 @@ function ProjectListCard({ project, onNavigate }: ProjectListCardProps) {
               className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
               loading="lazy"
             />
+          ) : (
+            <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+              <span className="text-gray-500">No image available</span>
+            </div>
           )}
         </div>
           <CardContent className="md:w-2/3 p-6">

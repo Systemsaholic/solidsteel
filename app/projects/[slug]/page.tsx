@@ -74,9 +74,9 @@ export default function ProjectPage({ params }: Props) {
 
   const hasCaseStudy = project ? projectHasCaseStudy(project.slug) : false
 
-  // Determine which images to use - prioritize blob storage, fallback to static
-  const displayHeroImage = heroImage || project.image || "/construction-site-overview.png"
-  const displayGalleryImages = galleryImages.length > 0 ? galleryImages : project.gallery || []
+  // Use only blob storage images - no fallbacks
+  const displayHeroImage = heroImage
+  const displayGalleryImages = galleryImages
   
   // Combine hero image with gallery for modal viewing
   const allImages = displayHeroImage ? [displayHeroImage, ...displayGalleryImages] : displayGalleryImages
@@ -155,12 +155,19 @@ export default function ProjectPage({ params }: Props) {
                 {imagesLoading ? (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                     <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
-                    <span className="ml-2 text-gray-500">Loading images...</span>
+                    <span className="ml-2 text-gray-500">Loading from Blob Storage...</span>
                   </div>
-                ) : (
+                ) : imagesError ? (
+                  <div className="w-full h-full bg-red-100 flex items-center justify-center">
+                    <div className="text-center p-4">
+                      <span className="text-red-600">Failed to load image from Blob Storage</span>
+                      <div className="text-sm text-red-500 mt-2">{imagesError}</div>
+                    </div>
+                  </div>
+                ) : displayHeroImage ? (
                   <>
                     <Image
-                      src={displayHeroImage || "/placeholder.svg"}
+                      src={displayHeroImage}
                       alt={project.title}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -169,18 +176,16 @@ export default function ProjectPage({ params }: Props) {
                       quality={85}
                       onError={(e) => {
                         console.error("Hero image failed to load:", displayHeroImage)
-                        // For CANDC project, use a different fallback if main image fails
-                        if (displayHeroImage?.includes('placeholder-x4kg9')) {
-                          e.currentTarget.src = "/construction-site-overview.png"
-                        } else {
-                          e.currentTarget.src = "/construction-site-overview.png"
-                        }
                       }}
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center">
                       <Expand className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={32} />
                     </div>
                   </>
+                ) : (
+                  <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                    <span className="text-gray-500">No image available from Blob Storage</span>
+                  </div>
                 )}
               </div>
 

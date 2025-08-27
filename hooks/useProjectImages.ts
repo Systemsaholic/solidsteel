@@ -52,16 +52,13 @@ export function useProjectImages(projectSlug: string): ProjectImages {
           error: null,
         })
       } catch (error) {
-        console.log("Blob storage unavailable, using static images")
-        
-        // Immediately use static images as fallback
-        const fallbackImages = getStaticFallbackImages(projectSlug)
+        console.error("Failed to fetch images from Blob Storage:", error)
         
         setImages({
-          heroImage: fallbackImages.hero,
-          galleryImages: fallbackImages.gallery,
+          heroImage: null,
+          galleryImages: [],
           isLoading: false,
-          error: null, // Don't show error if we have fallback images
+          error: `Failed to load images: ${error instanceof Error ? error.message : 'Unknown error'}`,
         })
       }
     }
@@ -75,35 +72,4 @@ export function useProjectImages(projectSlug: string): ProjectImages {
   return images
 }
 
-// Fallback static images in case blob storage is unavailable
-function getStaticFallbackImages(projectSlug: string): { hero: string | null; gallery: string[] } {
-  // Static fallback mappings for existing projects
-  const staticMappings: Record<string, { hero: string | null; gallery: string[] }> = {
-    "greystone-village-retirement": {
-      hero: "/modern-retirement-community.png",
-      gallery: [
-        "/retirement-community-common-area.png",
-        "/retirement-community-dining-hall.png",
-        "/retirement-community-gardens.png",
-      ],
-    },
-    "embrun-ford-dealership": {
-      hero: "/ford-dealership.png",
-      gallery: ["/ford-showroom-interior.png", "/automotive-service-bays.png", "/ford-dealership-lounge.png"],
-    },
-    "pro-xcavation-headquarters": {
-      hero: "/industrial-hq-equipment.png",
-      gallery: ["/corporate-office-interior.png", "/placeholder-6a4ci.png"],
-    },
-    "marc-forget-transport-facility": {
-      hero: "/transportation-logistics-facility.png",
-      gallery: ["/loading-dock-systems.png", "/fleet-maintenance-bay.png", "/logistics-office.png"],
-    },
-    "candc-welding-completion": {
-      hero: "/construction-site-overview.png",
-      gallery: ["/abandoned-construction-site.png"],
-    },
-  }
-
-  return staticMappings[projectSlug] || { hero: null, gallery: [] }
-}
+// No fallback images - force use of Blob Storage only
