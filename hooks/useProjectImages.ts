@@ -67,14 +67,8 @@ export function useProjectImages(projectSlug: string): ProjectImages {
     }
 
     if (projectSlug) {
-      // For now, just use static images directly since blob storage API isn't set up
-      const fallbackImages = getStaticFallbackImages(projectSlug)
-      setImages({
-        heroImage: fallbackImages.hero,
-        galleryImages: fallbackImages.gallery,
-        isLoading: false,
-        error: null,
-      })
+      // Load images - will try API first, then fall back to static images
+      loadProjectImages()
     }
   }, [projectSlug])
 
