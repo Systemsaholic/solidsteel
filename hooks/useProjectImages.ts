@@ -106,7 +106,7 @@ function getStaticFallbackImages(projectSlug: string): { hero: string | null; ga
       gallery: ["/loading-dock-systems.png", "/fleet-maintenance-bay.png", "/logistics-office.png"],
     },
     "candc-welding-completion": {
-      hero: "/placeholder-x4kg9.png",
+      hero: "/construction-site-overview.png",
       gallery: ["/abandoned-construction-site.png"],
     },
   }

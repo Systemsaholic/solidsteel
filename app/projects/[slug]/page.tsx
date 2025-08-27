@@ -169,8 +169,12 @@ export default function ProjectPage({ params }: Props) {
                       quality={85}
                       onError={(e) => {
                         console.error("Hero image failed to load:", displayHeroImage)
-                        // Fallback to placeholder if image fails
-                        e.currentTarget.src = "/construction-site-overview.png"
+                        // For CANDC project, use a different fallback if main image fails
+                        if (displayHeroImage?.includes('placeholder-x4kg9')) {
+                          e.currentTarget.src = "/construction-site-overview.png"
+                        } else {
+                          e.currentTarget.src = "/construction-site-overview.png"
+                        }
                       }}
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center">

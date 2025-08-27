@@ -188,7 +188,7 @@ export const projects: Project[] = [
     tags: ["distressed project", "takeover", "welding", "industrial", "recovery"],
     description:
       "Successful completion of a distressed welding facility construction project that was abandoned mid-construction due to contractor bankruptcy.",
-    image: "/placeholder-x4kg9.png",
+    image: "/construction-site-overview.png",
     gallery: [
       "/abandoned-construction-site.png",
       "/placeholder.svg?height=600&width=800",
