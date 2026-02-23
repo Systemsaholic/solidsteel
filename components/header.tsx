@@ -65,10 +65,10 @@ export function Header() {
           <div className="hidden lg:flex items-center space-x-2 ml-4">
             <Phone size={18} className="text-primary" />
             <a
-              href="tel:+16137919164"
+              href="tel:+16132318639"
               className="font-semibold text-gray-700 hover:text-primary transition-colors whitespace-nowrap"
             >
-              (613) 791-9164
+              (613) 231-8639
             </a>
           </div>
           <Button asChild size="lg" className="hidden lg:flex bg-yellow-600 hover:bg-yellow-500 text-white ml-4">
@@ -109,10 +109,10 @@ export function Header() {
             <div className="flex items-center justify-center space-x-3 py-3 bg-gray-50 rounded-lg">
               <Phone size={20} className="text-primary" />
               <a
-                href="tel:+16137919164"
+                href="tel:+16132318639"
                 className="font-semibold text-gray-700 hover:text-primary transition-colors text-lg"
               >
-                (613) 791-9164
+                (613) 231-8639
               </a>
             </div>
             <Button asChild size="lg" className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-4 text-lg">

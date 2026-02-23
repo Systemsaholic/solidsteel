@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { z } from "zod"
+import { verifyRecaptcha } from "@/lib/recaptcha"
 
 const quoteRequestSchema = z.object({
   projectName: z.string().min(2),
@@ -21,6 +22,22 @@ const quoteRequestSchema = z.object({
 export async function POST(request: Request) {
   try {
     const data = await request.json()
+
+    // Honeypot check - reject if filled
+    if (data.website || data.company_url) {
+      return NextResponse.json({ success: true, message: "Quote request submitted successfully" }, { status: 200 })
+    }
+
+    // Verify reCAPTCHA if token provided
+    if (data.recaptchaToken) {
+      const recaptchaResult = await verifyRecaptcha(data.recaptchaToken)
+      if (!recaptchaResult.success) {
+        return NextResponse.json(
+          { success: false, message: "reCAPTCHA verification failed" },
+          { status: 403 },
+        )
+      }
+    }
 
     // Validate the data
     const validatedData = quoteRequestSchema.parse(data)
@@ -57,8 +74,13 @@ export async function POST(request: Request) {
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
 
+      const webhookUrl = process.env.GROUNDHOGG_WEBHOOK_QUOTE_URL
+      if (!webhookUrl) {
+        throw new Error("GROUNDHOGG_WEBHOOK_QUOTE_URL is not configured")
+      }
+
       const crmResponse = await fetch(
-        "https://crm.solidsteelmgt.ca/wp-json/gh/v4/webhooks/4-webhook-listener?token=pPAI2Wm",
+        webhookUrl,
         {
           method: "POST",
           headers: {

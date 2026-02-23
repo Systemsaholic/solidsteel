@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
+import { executeRecaptcha } from "@/lib/recaptcha"
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ export function Contact() {
     phone: "",
     projectType: "",
     message: "",
+    company_url: "", // honeypot
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -37,6 +39,20 @@ export function Contact() {
     setIsSubmitting(true)
 
     try {
+      // Honeypot check
+      if (formData.company_url) {
+        // Silently "succeed" for bots
+        toast({
+          title: "Form submitted successfully!",
+          description: "We'll be in touch with you shortly.",
+        })
+        setFormData({ name: "", email: "", phone: "", projectType: "", message: "", company_url: "" })
+        return
+      }
+
+      // Get reCAPTCHA token
+      const recaptchaToken = await executeRecaptcha("contact_form")
+
       // Prepare data for CRM webhook
       const crmData = {
         // Basic contact info
@@ -59,8 +75,13 @@ export function Contact() {
       console.log("Sending to CRM:", JSON.stringify(crmData, null, 2))
 
       // Send to CRM webhook
+      const webhookUrl = process.env.NEXT_PUBLIC_GROUNDHOGG_WEBHOOK_CONTACT_URL
+      if (!webhookUrl) {
+        throw new Error("Webhook URL is not configured")
+      }
+
       const response = await fetch(
-        "https://crm.solidsteelmgt.ca/wp-json/gh/v4/webhooks/1-webhook-listener?token=O3MSR63",
+        webhookUrl,
         {
           method: "POST",
           headers: {
@@ -97,12 +118,13 @@ export function Contact() {
         phone: "",
         projectType: "",
         message: "",
+        company_url: "",
       })
     } catch (error) {
       console.error("Error submitting contact form:", error)
       toast({
         title: "Something went wrong",
-        description: "Please try again or call us directly at (613) 791-9164.",
+        description: "Please try again or call us directly at (613) 231-8639.",
         variant: "destructive",
       })
     } finally {
@@ -200,6 +222,20 @@ export function Contact() {
                   />
                 </div>
 
+                {/* Honeypot field - hidden from real users */}
+                <div className="absolute opacity-0 top-0 left-0 h-0 w-0 -z-10" aria-hidden="true">
+                  <label htmlFor="company_url">Company URL</label>
+                  <input
+                    type="text"
+                    id="company_url"
+                    name="company_url"
+                    value={formData.company_url}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, company_url: e.target.value }))}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
                 <Button
                   type="submit"
                   className="w-full h-12 sm:h-14 text-base sm:text-lg"
@@ -233,11 +269,11 @@ export function Contact() {
                     <div>
                       <h4 className="font-medium text-sm sm:text-base">Phone</h4>
                       <p className="text-gray-600 text-sm sm:text-base">
-                        <a href="tel:+16137919164" className="hover:text-primary transition-colors focus-visible">
-                          613-791-9164
+                        <a href="tel:+16132318639" className="hover:text-primary transition-colors focus-visible">
+                          613-231-8639
                         </a>
                       </p>
-                      <p className="text-xs sm:text-sm text-gray-500">Mon-Fri, 8am-5pm</p>
+                      <p className="text-xs sm:text-sm text-gray-500">Mon-Fri, 7am-5pm</p>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -259,7 +295,7 @@ export function Contact() {
                     <div>
                       <h4 className="font-medium text-sm sm:text-base">Business Hours</h4>
                       <p className="text-gray-600 text-sm sm:text-base">
-                        Monday – Friday: 8:00 AM – 5:00 PM
+                        Monday – Friday: 7:00 AM – 5:00 PM
                         <br />
                         Saturday & Sunday: Closed
                       </p>

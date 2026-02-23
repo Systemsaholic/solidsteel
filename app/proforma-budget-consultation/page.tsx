@@ -189,10 +189,10 @@ export default function ProformaBudgetConsultationPage() {
                 </p>
                 <div className="space-y-2">
                   <a
-                    href="tel:+16137919164"
+                    href="tel:+16132318639"
                     className="block text-blue-900 hover:text-blue-700 font-medium transition-colors"
                   >
-                    📞 (613) 791-9164
+                    📞 (613) 231-8639
                   </a>
                   <a
                     href="mailto:budget@solidsteelmgt.ca"

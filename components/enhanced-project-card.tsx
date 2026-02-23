@@ -37,23 +37,16 @@ export function EnhancedProjectCard({ project, onNavigate }: EnhancedProjectCard
             fallbackSrc="/placeholder.svg?height=400&width=600&query=construction project"
           />
         )}
-        {/* Status and Value badges */}
-        {(project.status || project.projectValue) && (
-          <div className="absolute top-4 left-4 right-4 flex justify-between">
-            {project.status && (
-              <span className={`px-2 py-1 text-xs font-medium rounded ${
-                project.status === 'completed' ? 'bg-green-100 text-green-800' :
-                project.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
-                'bg-yellow-100 text-yellow-800'
-              }`}>
-                {project.status.replace('-', ' ')}
-              </span>
-            )}
-            {project.projectValue && (
-              <span className="px-2 py-1 text-xs font-medium rounded bg-black/70 text-white">
-                {project.projectValue}
-              </span>
-            )}
+        {/* Status badge */}
+        {project.status && (
+          <div className="absolute top-4 left-4">
+            <span className={`px-2 py-1 text-xs font-medium rounded ${
+              project.status === 'completed' ? 'bg-green-100 text-green-800' :
+              project.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
+              'bg-yellow-100 text-yellow-800'
+            }`}>
+              {project.status.replace('-', ' ')}
+            </span>
           </div>
         )}
       </div>

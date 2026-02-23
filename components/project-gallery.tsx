@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react"
 import { useRouter } from "next/navigation"
-import { Search, Filter, Grid, List, MapPin, Calendar, Clock, Star, Loader2, DollarSign } from "lucide-react"
+import { Search, Filter, Grid, List, MapPin, Calendar, Clock, Star, Loader2 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"

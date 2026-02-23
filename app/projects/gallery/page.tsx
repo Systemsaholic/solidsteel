@@ -41,8 +41,7 @@ export default function ProjectGalleryPage() {
               expertise.
             </p>
             <div className="flex flex-wrap gap-4 text-sm">
-              <span className="bg-blue-800 px-3 py-1 rounded-full">50+ Completed Projects</span>
-              <span className="bg-blue-800 px-3 py-1 rounded-full">$200M+ in Construction Value</span>
+              <span className="bg-blue-800 px-3 py-1 rounded-full">Completed Projects</span>
               <span className="bg-blue-800 px-3 py-1 rounded-full">Multiple Industries</span>
               <span className="bg-blue-800 px-3 py-1 rounded-full">Advanced Technologies</span>
             </div>

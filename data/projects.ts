@@ -16,7 +16,6 @@ export interface Project {
   features?: string[]
   // Enhanced fields for filtering and search
   technologies?: string[]
-  projectValue?: string
   duration?: string
   status: "completed" | "in-progress" | "planned"
   tags?: string[]
@@ -34,8 +33,7 @@ export const projects: Project[] = [
     location: "Ottawa, ON",
     completionDate: "September 2019",
     client: "Greystone Village Development",
-    squareFootage: "85,000 sq ft",
-    projectValue: "$12.5M",
+    squareFootage: "153,000 sq ft",
     duration: "18 months",
     status: "completed",
     year: 2019,
@@ -43,7 +41,7 @@ export const projects: Project[] = [
     technologies: ["Steel Frame", "Concrete", "HVAC Systems", "Accessibility Features"],
     tags: ["senior living", "accessibility", "healthcare", "community"],
     description:
-      "Complete construction of a state-of-the-art retirement community facility featuring modern amenities, accessible design, and beautiful common areas for residents.",
+      "Design-build of a 153,000 sq ft state-of-the-art retirement community facility featuring modern amenities, accessible design, and beautiful common areas for residents.",
     image: "/modern-retirement-community.png",
     gallery: [
       "/retirement-community-common-area.png",
@@ -73,8 +71,7 @@ export const projects: Project[] = [
     location: "Embrun, ON",
     completionDate: "June 2021",
     client: "Embrun Ford",
-    squareFootage: "32,000 sq ft",
-    projectValue: "$8.2M",
+    squareFootage: "6,000 sq ft",
     duration: "14 months",
     status: "completed",
     year: 2021,
@@ -82,7 +79,7 @@ export const projects: Project[] = [
     technologies: ["Steel Structure", "Glass Curtain Wall", "LED Lighting", "Service Equipment"],
     tags: ["automotive", "retail", "showroom", "service center"],
     description:
-      "Full-service automotive dealership featuring a modern showroom, comprehensive service facilities, and customer amenities designed to enhance the car buying experience.",
+      "Existing dealership where SSM built a 6,000 sq ft 6-bay commercial garage addition (design-build). Scope included electrical, plumbing, equipment installation, telecom & security, and commercial hose fume extraction system.",
     image: "/ford-dealership.png",
     gallery: ["/ford-showroom-interior.png", "/automotive-service-bays.png", "/ford-dealership-lounge.png"],
     challenge:
@@ -108,8 +105,7 @@ export const projects: Project[] = [
     location: "Eastern Ontario",
     completionDate: "March 2022",
     client: "Pro-Xcavation Ltd.",
-    squareFootage: "28,000 sq ft",
-    projectValue: "$5.8M",
+    squareFootage: "12,000 sq ft",
     duration: "12 months",
     status: "completed",
     year: 2022,
@@ -143,8 +139,7 @@ export const projects: Project[] = [
     location: "Ottawa Valley, ON",
     completionDate: "August 2020",
     client: "Marc Forget Transport",
-    squareFootage: "45,000 sq ft",
-    projectValue: "$7.1M",
+    squareFootage: "8,000 sq ft",
     duration: "16 months",
     status: "completed",
     year: 2020,
@@ -179,7 +174,6 @@ export const projects: Project[] = [
     completionDate: "March 2023",
     client: "Receivership Firm",
     squareFootage: "15,000 sq ft",
-    projectValue: "$2.8M",
     duration: "7 months",
     status: "completed",
     year: 2023,
