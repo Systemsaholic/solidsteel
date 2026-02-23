@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
     const file = formData.get("file") as File
-    const folder = (formData.get("folder") as string) || "video"
+    const folder = "video" // Fixed folder — no user input
 
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 })
@@ -40,9 +40,9 @@ export async function POST(request: NextRequest) {
       pathname: result.pathname,
     })
   } catch (error) {
-    console.error("Video upload error:", error)
-    return NextResponse.json({ 
-      error: error instanceof Error ? error.message : "Failed to upload video" 
+    console.error("Video upload error:", error instanceof Error ? error.message : "Unknown error")
+    return NextResponse.json({
+      error: "Failed to upload video"
     }, { status: 500 })
   }
 }

@@ -5,7 +5,9 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
     const file = formData.get("file") as File
-    const folder = (formData.get("folder") as string) || "general"
+    const allowedFolders = ["general", "quote-requests", "proforma-consultations", "projects"]
+    const requestedFolder = (formData.get("folder") as string) || "general"
+    const folder = allowedFolders.includes(requestedFolder) ? requestedFolder : "general"
 
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 })
@@ -24,7 +26,9 @@ export async function POST(request: NextRequest) {
     }
 
     const timestamp = Date.now()
-    const extension = file.name.split(".").pop() || "jpg"
+    const allowedExtensions = ["jpg", "jpeg", "png", "webp", "avif"]
+    const rawExtension = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "")
+    const extension = allowedExtensions.includes(rawExtension) ? rawExtension : "jpg"
     const filename = `${folder}/${timestamp}.${extension}`
 
     const result = await uploadToBlob(file, filename)

@@ -28,8 +28,8 @@ export async function executeRecaptcha(action: string): Promise<string | null> {
 export async function verifyRecaptcha(token: string): Promise<{ success: boolean; score: number }> {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY
   if (!secretKey) {
-    // If no secret key configured, skip verification
-    return { success: true, score: 1.0 }
+    console.error("RECAPTCHA_SECRET_KEY is not configured")
+    return { success: false, score: 0 }
   }
 
   try {
@@ -42,7 +42,7 @@ export async function verifyRecaptcha(token: string): Promise<{ success: boolean
     const data = await response.json()
     return { success: data.success && (data.score ?? 0) >= 0.5, score: data.score ?? 0 }
   } catch {
-    // If verification fails, allow submission (fail open)
-    return { success: true, score: 0 }
+    console.error("reCAPTCHA verification request failed")
+    return { success: false, score: 0 }
   }
 }

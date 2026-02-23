@@ -3,48 +3,35 @@ import { z } from "zod"
 import { verifyRecaptcha } from "@/lib/recaptcha"
 
 const proformaBudgetSchema = z.object({
-  // Project Information
-  projectName: z.string().min(2),
-  projectType: z.string().min(1),
-  projectLocation: z.string().min(2),
-  projectDescription: z.string().min(100),
-
-  // Project Specifications
-  buildingSize: z.string().min(1),
-  siteSize: z.string().optional(),
-  numberOfFloors: z.string().min(1),
-  occupancyType: z.string().min(1),
-  constructionType: z.string().min(1),
-
-  // Budget Parameters
-  estimatedBudget: z.string().min(1),
-  budgetFlexibility: z.string().min(1),
-  fundingSource: z.string().min(1),
-  financingNeeded: z.string().min(1),
-
-  // Timeline
-  projectStartDate: z.string().optional(),
-  desiredCompletionDate: z.string().optional(),
-  budgetDeadline: z.string().min(1),
-
-  // Consultation Specifics
-  consultationPurpose: z.array(z.string()).min(1),
-  specificConcerns: z.string().optional(),
-  previousEstimates: z.string().min(1),
-
-  // Contact Information
-  clientName: z.string().min(2),
-  clientTitle: z.string().optional(),
-  companyName: z.string().min(2),
-  clientEmail: z.string().email(),
-  clientPhone: z.string().min(10),
-
-  // Additional Requirements
-  siteVisitRequired: z.string().min(1),
-  presentationRequired: z.string().min(1),
-  additionalServices: z.array(z.string()).optional(),
-  specialRequirements: z.string().optional(),
-  attachments: z.array(z.string()).optional(),
+  projectName: z.string().min(2).max(200),
+  projectType: z.string().min(1).max(100),
+  projectLocation: z.string().min(2).max(200),
+  projectDescription: z.string().min(100).max(10000),
+  buildingSize: z.string().min(1).max(100),
+  siteSize: z.string().max(100).optional(),
+  numberOfFloors: z.string().min(1).max(20),
+  occupancyType: z.string().min(1).max(50),
+  constructionType: z.string().min(1).max(50),
+  estimatedBudget: z.string().min(1).max(50),
+  budgetFlexibility: z.string().min(1).max(50),
+  fundingSource: z.string().min(1).max(50),
+  financingNeeded: z.string().min(1).max(50),
+  projectStartDate: z.string().max(20).optional(),
+  desiredCompletionDate: z.string().max(20).optional(),
+  budgetDeadline: z.string().min(1).max(50),
+  consultationPurpose: z.array(z.string().max(50)).min(1).max(10),
+  specificConcerns: z.string().max(5000).optional(),
+  previousEstimates: z.string().min(1).max(50),
+  clientName: z.string().min(2).max(100),
+  clientTitle: z.string().max(100).optional(),
+  companyName: z.string().min(2).max(200),
+  clientEmail: z.string().email().max(254),
+  clientPhone: z.string().min(10).max(20),
+  siteVisitRequired: z.string().min(1).max(50),
+  presentationRequired: z.string().min(1).max(50),
+  additionalServices: z.array(z.string().max(50)).max(10).optional(),
+  specialRequirements: z.string().max(5000).optional(),
+  attachments: z.array(z.string().url()).max(10).optional(),
   submittedAt: z.string(),
 })
 
@@ -52,7 +39,7 @@ export async function POST(request: Request) {
   try {
     const data = await request.json()
 
-    // Honeypot check - reject if filled
+    // Honeypot check
     if (data.website || data.company_url) {
       return NextResponse.json({ success: true, message: "Consultation request submitted successfully" }, { status: 200 })
     }
@@ -73,27 +60,20 @@ export async function POST(request: Request) {
 
     // Prepare data for CRM webhook
     const crmData = {
-      // Basic contact info
       name: validatedData.clientName,
       email: validatedData.clientEmail,
       phone: validatedData.clientPhone,
       company: validatedData.companyName,
       title: validatedData.clientTitle || "",
-
-      // Project details
       project_name: validatedData.projectName,
       project_type: validatedData.projectType,
       project_location: validatedData.projectLocation,
       building_size: validatedData.buildingSize,
       estimated_budget: validatedData.estimatedBudget,
       budget_deadline: validatedData.budgetDeadline,
-
-      // Consultation specifics
       consultation_purposes: validatedData.consultationPurpose.join(", "),
       funding_source: validatedData.fundingSource,
       financing_needed: validatedData.financingNeeded,
-
-      // Comprehensive message
       message: `PROFORMA BUDGET CONSULTATION REQUEST
 
 Project: ${validatedData.projectName}
@@ -129,125 +109,66 @@ ${validatedData.additionalServices?.length ? `- Additional Services: ${validated
 PROJECT DESCRIPTION:
 ${validatedData.projectDescription}
 
-${
-  validatedData.specificConcerns
-    ? `SPECIFIC CONCERNS:
-${validatedData.specificConcerns}`
-    : ""
-}
+${validatedData.specificConcerns ? `SPECIFIC CONCERNS:\n${validatedData.specificConcerns}` : ""}
 
-${
-  validatedData.specialRequirements
-    ? `SPECIAL REQUIREMENTS:
-${validatedData.specialRequirements}`
-    : ""
-}
+${validatedData.specialRequirements ? `SPECIAL REQUIREMENTS:\n${validatedData.specialRequirements}` : ""}
 
 Previous Estimates: ${validatedData.previousEstimates}
 Attachments: ${validatedData.attachments?.length || 0} files uploaded`,
-
-      // Metadata
       source: "Website Proforma Budget Consultation",
       form_type: "proforma_budget_consultation",
       priority: validatedData.budgetDeadline === "asap" ? "urgent" : "normal",
     }
 
-    console.log("Sending proforma budget consultation to CRM:", JSON.stringify(crmData, null, 2))
-
-    // Send to CRM webhook with timeout and better error handling
-    let crmSuccess = false
-    let crmError = null
-
+    // Send to CRM webhook
     try {
       const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+      const timeoutId = setTimeout(() => controller.abort(), 10000)
 
       const webhookUrl = process.env.GROUNDHOGG_WEBHOOK_QUOTE_URL
       if (!webhookUrl) {
-        throw new Error("GROUNDHOGG_WEBHOOK_QUOTE_URL is not configured")
+        throw new Error("Webhook URL is not configured")
       }
 
-      const crmResponse = await fetch(
-        webhookUrl,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "User-Agent": "SolidSteelWebsite/1.0",
-          },
-          body: JSON.stringify(crmData),
-          signal: controller.signal,
+      const crmResponse = await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "User-Agent": "SolidSteelWebsite/1.0",
         },
-      )
+        body: JSON.stringify(crmData),
+        signal: controller.signal,
+      })
 
       clearTimeout(timeoutId)
 
-      if (crmResponse.ok) {
-        const responseText = await crmResponse.text()
-        console.log("CRM Success:", crmResponse.status, responseText)
-        crmSuccess = true
-      } else {
-        const errorText = await crmResponse.text()
-        console.error("CRM webhook failed:", {
-          status: crmResponse.status,
-          statusText: crmResponse.statusText,
-          response: errorText,
-          headers: Object.fromEntries(crmResponse.headers.entries()),
-        })
-        crmError = `HTTP ${crmResponse.status}: ${errorText}`
+      if (!crmResponse.ok) {
+        console.error("CRM webhook failed:", crmResponse.status)
       }
     } catch (fetchError) {
-      console.error("CRM webhook error:", fetchError)
-      crmError = fetchError instanceof Error ? fetchError.message : "Network error"
+      console.error("CRM webhook error:", fetchError instanceof Error ? fetchError.message : "Network error")
     }
 
-    // Log the consultation request locally for backup
-    console.log("Proforma Budget Consultation Processed:", {
-      projectName: validatedData.projectName,
-      clientEmail: validatedData.clientEmail,
-      companyName: validatedData.companyName,
-      projectType: validatedData.projectType,
-      estimatedBudget: validatedData.estimatedBudget,
-      budgetDeadline: validatedData.budgetDeadline,
-      consultationPurposes: validatedData.consultationPurpose.length,
-      attachments: validatedData.attachments?.length || 0,
-      submittedAt: validatedData.submittedAt,
-      crmSuccess,
-      crmError: crmError || "none",
-    })
-
-    // Always return success to user, even if CRM fails
-    // The form data is logged locally as backup
     return NextResponse.json(
       {
         success: true,
         message: "Proforma budget consultation request submitted successfully",
-        requestId: `PBC-${Date.now()}`,
-        // Include CRM status for debugging (remove in production)
-        debug:
-          process.env.NODE_ENV === "development"
-            ? {
-                crmSuccess,
-                crmError,
-              }
-            : undefined,
       },
       { status: 200 },
     )
   } catch (error) {
-    console.error("Error processing proforma budget consultation:", error)
-
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         {
           success: false,
-          message: "Invalid form data",
-          errors: error.errors,
+          message: "Invalid form data. Please check your entries and try again.",
         },
         { status: 400 },
       )
     }
+
+    console.error("Error processing proforma budget consultation:", error instanceof Error ? error.message : "Unknown error")
 
     return NextResponse.json(
       {

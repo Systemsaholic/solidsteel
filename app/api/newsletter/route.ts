@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     // This would be where you'd integrate with your email marketing service
     // For example, adding the subscriber to Mailchimp, ConvertKit, etc.
 
-    console.log("Newsletter signup:", email)
+    // Newsletter signup processed
 
     return NextResponse.json({ success: true, message: "Successfully subscribed to newsletter" }, { status: 200 })
   } catch (error) {
