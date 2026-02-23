@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Loader2, Expand } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -8,7 +9,6 @@ import { GalleryModal } from "@/components/gallery-modal"
 import { getCaseStudyBySlug, getRelatedCaseStudies } from "@/lib/case-studies"
 import { getProjectBySlug } from "@/lib/projects"
 import { useProjectImages } from "@/hooks/useProjectImages"
-import { ResilientImage } from "@/components/resilient-image"
 import { CaseStudyHeader } from "@/components/case-study/case-study-header"
 import { RelatedCaseStudyCard } from "@/components/case-study/related-case-study-card"
 import { CaseStudyOverview } from "@/components/case-study/case-study-overview"
@@ -93,7 +93,7 @@ export default function CaseStudyPage({ params }: Props) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2">
               {/* Hero Image */}
-              <div 
+              <div
                 className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-8 cursor-pointer group"
                 onClick={() => handleImageClick(0, true)}
               >
@@ -101,13 +101,14 @@ export default function CaseStudyPage({ params }: Props) {
                   <div className="w-full h-full bg-gray-200 animate-pulse" />
                 ) : (
                   <>
-                    <ResilientImage
+                    <Image
                       src={heroImage}
                       alt={caseStudy.title}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      loading="eager"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 66vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                       priority
-                      fallbackSrc="/placeholder.svg"
+                      quality={75}
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center">
                       <Expand className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={32} />
@@ -117,30 +118,26 @@ export default function CaseStudyPage({ params }: Props) {
               </div>
 
               {/* Gallery */}
-              {galleryImages.length > 0 && (
+              {!imagesLoading && galleryImages.length > 0 && (
                 <div className="grid grid-cols-3 gap-4 mb-12">
                   {galleryImages.slice(0, 3).map((image, index) => (
-                    <div 
-                      key={index} 
+                    <div
+                      key={index}
                       className="relative h-[120px] rounded-lg overflow-hidden cursor-pointer group"
                       onClick={() => handleImageClick(index)}
                     >
-                      {imagesLoading ? (
-                        <div className="w-full h-full bg-gray-200 animate-pulse" />
-                      ) : (
-                        <>
-                          <ResilientImage
-                            src={image || "/placeholder.svg"}
-                            alt={`${caseStudy.title} gallery image ${index + 1}`}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            loading="lazy"
-                            fallbackSrc="/placeholder.svg"
-                          />
-                          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center">
-                            <Expand className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={20} />
-                          </div>
-                        </>
-                      )}
+                      <Image
+                        src={image}
+                        alt={`${caseStudy.title} gallery ${index + 1}`}
+                        fill
+                        sizes="(max-width: 768px) 33vw, 22vw"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        quality={60}
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center">
+                        <Expand className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={20} />
+                      </div>
                     </div>
                   ))}
                 </div>

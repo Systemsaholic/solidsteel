@@ -147,22 +147,14 @@ export default function ProjectPage({ params }: Props) {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2">
-              {/* Hero Image - Using blob storage with fallback */}
-              <div 
+              {/* Hero Image */}
+              <div
                 className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-8 cursor-pointer group"
                 onClick={() => handleImageClick(0, true)}
               >
                 {imagesLoading ? (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                     <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
-                    <span className="ml-2 text-gray-500">Loading from Blob Storage...</span>
-                  </div>
-                ) : imagesError ? (
-                  <div className="w-full h-full bg-red-100 flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <span className="text-red-600">Failed to load image from Blob Storage</span>
-                      <div className="text-sm text-red-500 mt-2">{imagesError}</div>
-                    </div>
                   </div>
                 ) : displayHeroImage ? (
                   <>
@@ -170,13 +162,10 @@ export default function ProjectPage({ params }: Props) {
                       src={displayHeroImage}
                       alt={project.title}
                       fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      sizes="(max-width: 768px) 100vw, 66vw"
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                       priority
-                      quality={85}
-                      onError={(e) => {
-                        console.error("Hero image failed to load:", displayHeroImage)
-                      }}
+                      quality={75}
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center">
                       <Expand className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={32} />
@@ -184,12 +173,12 @@ export default function ProjectPage({ params }: Props) {
                   </>
                 ) : (
                   <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                    <span className="text-gray-500">No image available from Blob Storage</span>
+                    <span className="text-gray-500">No image available</span>
                   </div>
                 )}
               </div>
 
-              {/* Gallery - Using blob storage with fallback to static */}
+              {/* Gallery Grid — show first 6, lazy load */}
               {!imagesLoading && displayGalleryImages.length > 0 && (
                 <div className="mb-8">
                   <h3 className="text-xl font-semibold text-blue-700 mb-4">Project Gallery</h3>
@@ -201,17 +190,13 @@ export default function ProjectPage({ params }: Props) {
                         onClick={() => handleImageClick(index)}
                       >
                         <Image
-                          src={image || "/placeholder.svg?height=150&width=200&query=construction project gallery"}
-                          alt={`${project.title} gallery image ${index + 1}`}
+                          src={image}
+                          alt={`${project.title} gallery ${index + 1}`}
                           fill
-                          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
+                          sizes="(max-width: 768px) 50vw, 22vw"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
-                          quality={80}
-                          onError={(e) => {
-                            console.error("Gallery image failed to load:", image)
-                            // Fallback to placeholder if image fails
-                            e.currentTarget.src = "/construction-project-gallery.png"
-                          }}
+                          quality={60}
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center">
                           <Expand className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" size={24} />
@@ -220,23 +205,23 @@ export default function ProjectPage({ params }: Props) {
                     ))}
                   </div>
                   {displayGalleryImages.length > 6 && (
-                    <p className="text-sm text-gray-500 mt-2">Showing 6 of {displayGalleryImages.length} images</p>
+                    <button
+                      onClick={() => { setSelectedImageIndex(0); setGalleryModalOpen(true) }}
+                      className="text-sm text-blue-700 hover:text-blue-900 font-medium mt-3"
+                    >
+                      View all {displayGalleryImages.length + 1} photos →
+                    </button>
                   )}
                 </div>
               )}
 
-              {/* Show loading state for gallery */}
+              {/* Loading skeleton */}
               {imagesLoading && (
                 <div className="mb-8">
                   <h3 className="text-xl font-semibold text-blue-700 mb-4">Project Gallery</h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {[...Array(6)].map((_, index) => (
-                      <div
-                        key={index}
-                        className="h-[120px] md:h-[150px] bg-gray-200 rounded-lg animate-pulse flex items-center justify-center"
-                      >
-                        <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
-                      </div>
+                      <div key={index} className="h-[120px] md:h-[150px] bg-gray-200 rounded-lg animate-pulse" />
                     ))}
                   </div>
                 </div>

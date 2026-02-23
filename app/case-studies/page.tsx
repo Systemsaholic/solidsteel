@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, AlertTriangle, CheckCircle, Clock, Award } from "lucide-react"
@@ -15,17 +16,20 @@ import type { CaseStudy } from "@/data/case-studies"
 function CaseStudyImage({ caseStudy, size }: { caseStudy: CaseStudy; size: "large" | "small" }) {
   const { heroImage, isLoading } = useProjectImages(caseStudy.projectSlug)
   const imageSource = heroImage || caseStudy.heroImage || "/placeholder.svg"
-  
+
   if (isLoading) {
     return <div className="w-full h-full bg-gray-200 animate-pulse" />
   }
-  
+
   return (
-    <img
+    <Image
       src={imageSource}
       alt={caseStudy.title}
-      className="w-full h-full object-cover"
+      fill
+      sizes={size === "large" ? "(max-width: 768px) 100vw, 66vw" : "(max-width: 768px) 100vw, 33vw"}
+      className="object-cover"
       loading={size === "large" ? "eager" : "lazy"}
+      quality={60}
     />
   )
 }

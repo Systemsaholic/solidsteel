@@ -7,6 +7,7 @@ import {
   Dialog,
   DialogContent,
   DialogClose,
+  DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 
@@ -62,7 +63,8 @@ export function GalleryModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[95vw] w-[95vw] h-[95vh] p-0 overflow-hidden bg-black/95 border-0">
+      <DialogContent className="max-w-[95vw] w-[95vw] h-[95vh] p-0 overflow-hidden bg-black/95 border-0" aria-describedby={undefined}>
+        <DialogTitle className="sr-only">{title} Gallery</DialogTitle>
         <div className="relative w-full h-full flex flex-col">
           {/* Header */}
           <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center p-4 bg-gradient-to-b from-black/80 to-transparent">
@@ -129,28 +131,21 @@ export function GalleryModal({
             )}
           </div>
 
-          {/* Thumbnail Strip (optional - for better navigation) */}
+          {/* Navigation indicator */}
           {images.length > 1 && (
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-              <div className="flex gap-2 justify-center overflow-x-auto max-w-full">
-                {images.map((image, index) => (
+              <div className="flex gap-1.5 justify-center">
+                {images.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => onNavigate(index)}
-                    className={`relative flex-shrink-0 w-16 h-16 rounded overflow-hidden transition-all ${
+                    className={`w-2 h-2 rounded-full transition-all ${
                       index === currentIndex
-                        ? "ring-2 ring-white opacity-100"
-                        : "opacity-50 hover:opacity-75"
+                        ? "bg-white w-6"
+                        : "bg-white/40 hover:bg-white/70"
                     }`}
-                  >
-                    <Image
-                      src={image}
-                      alt={`Thumbnail ${index + 1}`}
-                      fill
-                      className="object-cover"
-                      sizes="64px"
-                    />
-                  </button>
+                    aria-label={`Go to image ${index + 1}`}
+                  />
                 ))}
               </div>
             </div>

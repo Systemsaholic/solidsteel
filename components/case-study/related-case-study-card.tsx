@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useProjectImages } from "@/hooks/useProjectImages"
@@ -18,17 +19,18 @@ export function RelatedCaseStudyCard({ caseStudy, onNavigate }: RelatedCaseStudy
   
   return (
     <Card className="overflow-hidden hover:shadow-lg transition duration-300">
-      <div className="h-48 overflow-hidden">
+      <div className="relative h-48 overflow-hidden">
         {isLoading ? (
           <div className="w-full h-full bg-gray-200 animate-pulse" />
         ) : (
-          <img
+          <Image
             src={imageSource}
             alt={caseStudy.title}
-            width={400}
-            height={300}
-            className="w-full h-full object-cover"
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-cover"
             loading="lazy"
+            quality={60}
           />
         )}
       </div>
