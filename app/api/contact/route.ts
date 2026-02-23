@@ -1,8 +1,25 @@
 import { NextResponse } from "next/server"
+import { verifyRecaptcha } from "@/lib/recaptcha"
 
 export async function POST(request: Request) {
   try {
     const data = await request.json()
+
+    // Honeypot check - reject if filled
+    if (data.company_url || data.website) {
+      return NextResponse.json({ success: true, message: "Contact form submitted successfully" }, { status: 200 })
+    }
+
+    // Verify reCAPTCHA if token provided
+    if (data.recaptchaToken) {
+      const recaptchaResult = await verifyRecaptcha(data.recaptchaToken)
+      if (!recaptchaResult.success) {
+        return NextResponse.json(
+          { success: false, message: "reCAPTCHA verification failed" },
+          { status: 403 },
+        )
+      }
+    }
 
     // Validate form data
     const { name, email, phone, projectType, message } = data

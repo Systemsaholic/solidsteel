@@ -117,8 +117,8 @@ export default function QuoteRequestPage() {
                 <div className="space-y-3">
                   <div>
                     <p className="font-medium text-blue-900">Phone</p>
-                    <a href="tel:+16137919164" className="text-gray-700 hover:text-blue-900 transition-colors">
-                      (613) 791-9164
+                    <a href="tel:+16132318639" className="text-gray-700 hover:text-blue-900 transition-colors">
+                      (613) 231-8639
                     </a>
                   </div>
                   <div>
@@ -132,7 +132,7 @@ export default function QuoteRequestPage() {
                   </div>
                   <div>
                     <p className="font-medium text-blue-900">Business Hours</p>
-                    <p className="text-gray-700 text-sm">Monday - Friday: 8:00 AM - 5:00 PM</p>
+                    <p className="text-gray-700 text-sm">Monday - Friday: 7:00 AM - 5:00 PM</p>
                   </div>
                 </div>
               </div>
@@ -144,10 +144,10 @@ export default function QuoteRequestPage() {
                   recovery. Call us directly for immediate assistance.
                 </p>
                 <a
-                  href="tel:+16137919164"
+                  href="tel:+16132318639"
                   className="inline-flex items-center text-blue-900 hover:text-blue-700 font-medium transition-colors"
                 >
-                  Call (613) 791-9164 →
+                  Call (613) 231-8639 →
                 </a>
               </div>
             </div>

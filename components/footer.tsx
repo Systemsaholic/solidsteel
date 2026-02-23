@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
 import { EnhancedLink } from "@/components/enhanced-link"
 
 export function Footer() {
@@ -27,25 +26,6 @@ export function Footer() {
               Building excellence in commercial steel construction. Specializing in warehouses, commercial garages, and
               industrial structures.
             </p>
-            <div className="flex space-x-4">
-              {[
-                { icon: <Facebook size={18} />, label: "Facebook", href: "https://facebook.com" },
-                { icon: <Twitter size={18} />, label: "Twitter", href: "https://twitter.com" },
-                { icon: <Instagram size={18} />, label: "Instagram", href: "https://instagram.com" },
-                { icon: <Linkedin size={18} />, label: "LinkedIn", href: "https://linkedin.com" },
-              ].map((social, index) => (
-                <a
-                  key={index}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition duration-150 focus-visible p-2"
-                  aria-label={social.label}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
           </div>
 
           <div>
@@ -106,8 +86,8 @@ export function Footer() {
               </p>
               <p>
                 Phone:{" "}
-                <a href="tel:+16137919164" className="hover:text-white transition-colors focus-visible">
-                  (613) 791-9164
+                <a href="tel:+16132318639" className="hover:text-white transition-colors focus-visible">
+                  (613) 231-8639
                 </a>
               </p>
               <p className="break-all">

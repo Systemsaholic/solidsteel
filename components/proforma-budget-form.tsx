@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "@/components/ui/use-toast"
 import { ImageUpload } from "@/components/image-upload"
 import { Calendar, Upload, Loader2, CheckCircle, Calculator } from "lucide-react"
+import { executeRecaptcha } from "@/lib/recaptcha"
 
 const proformaBudgetSchema = z.object({
   // Project Information
@@ -87,6 +88,7 @@ export function ProformaBudgetForm() {
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([])
   const [selectedPurposes, setSelectedPurposes] = useState<string[]>([])
   const [selectedServices, setSelectedServices] = useState<string[]>([])
+  const [honeypot, setHoneypot] = useState("")
 
   const {
     register,
@@ -119,10 +121,21 @@ export function ProformaBudgetForm() {
     setIsSubmitting(true)
 
     try {
+      // Honeypot check
+      if (honeypot) {
+        setIsSubmitted(true)
+        reset()
+        return
+      }
+
+      // Get reCAPTCHA token
+      const recaptchaToken = await executeRecaptcha("proforma_budget")
+
       const formData = {
         ...data,
         attachments: uploadedFiles,
         submittedAt: new Date().toISOString(),
+        recaptchaToken,
       }
 
       console.log("Submitting proforma budget form:", formData)
@@ -161,7 +174,7 @@ export function ProformaBudgetForm() {
       console.error("Error submitting consultation request:", error)
       toast({
         title: "Submission failed",
-        description: "Please try again or contact us directly at (613) 791-9164.",
+        description: "Please try again or contact us directly at (613) 231-8639.",
         variant: "destructive",
       })
     } finally {
@@ -692,6 +705,20 @@ export function ProformaBudgetForm() {
                 estimates, or reference materials (max 10 files, 10MB each)
               </p>
             </div>
+          </div>
+
+          {/* Honeypot field - hidden from real users */}
+          <div className="absolute opacity-0 top-0 left-0 h-0 w-0 -z-10" aria-hidden="true">
+            <label htmlFor="proforma_website">Website</label>
+            <input
+              type="text"
+              id="proforma_website"
+              name="website"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+            />
           </div>
 
           <div className="pt-6 border-t border-gray-200">

@@ -189,23 +189,6 @@ export default function ProjectPage({ params }: Props) {
                 )}
               </div>
 
-              {/* Image Source Indicator (for debugging - remove in production) */}
-              {process.env.NODE_ENV === "development" && (
-                <div className="mb-4 p-2 bg-gray-100 rounded text-xs">
-                  <p>
-                    <strong>Image Source:</strong> {heroImage ? "Blob Storage" : "Static Fallback"}
-                  </p>
-                  <p>
-                    <strong>Gallery Count:</strong> {galleryImages.length} blob + {project.gallery?.length || 0} static
-                  </p>
-                  {imagesError && (
-                    <p className="text-red-600">
-                      <strong>Error:</strong> {imagesError}
-                    </p>
-                  )}
-                </div>
-              )}
-
               {/* Gallery - Using blob storage with fallback to static */}
               {!imagesLoading && displayGalleryImages.length > 0 && (
                 <div className="mb-8">
