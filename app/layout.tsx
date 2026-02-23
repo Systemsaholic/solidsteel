@@ -36,7 +36,20 @@ export const metadata: Metadata = {
     address: true,
     telephone: true,
   },
-    generator: 'v0.dev'
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 }
 
 export default function RootLayout({
@@ -48,8 +61,42 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="canonical" href="https://solidsteelmgt.ca" />
         <meta name="theme-color" content="#0098DA" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "GeneralContractor",
+              "@id": "https://solidsteelmgt.ca/#organization",
+              name: "Solid Steel Management",
+              url: "https://solidsteelmgt.ca",
+              logo: "https://solidsteelmgt.ca/logo.png",
+              description:
+                "Excellence in Commercial Construction — Design-build, project management, general contracting, and distressed project takeovers across Ontario since 2015.",
+              telephone: "+1-613-407-8335",
+              foundingDate: "2015",
+              areaServed: {
+                "@type": "AdministrativeArea",
+                name: "Ontario, Canada",
+              },
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Ottawa",
+                addressRegion: "Ontario",
+                addressCountry: "CA",
+              },
+              sameAs: [],
+              knowsAbout: [
+                "Commercial Construction",
+                "Design-Build",
+                "General Contracting",
+                "Project Management",
+                "Distressed Project Takeovers",
+              ],
+            }),
+          }}
+        />
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
