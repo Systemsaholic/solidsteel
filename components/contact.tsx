@@ -54,58 +54,27 @@ export function Contact() {
       // Get reCAPTCHA token
       const recaptchaToken = await executeRecaptcha("contact_form")
 
-      // Prepare data for CRM webhook
-      const crmData = {
-        // Basic contact info
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-
-        // Project details
-        project_type: formData.projectType,
-
-        // Message content
-        message: `Project Type: ${formData.projectType}\n\nMessage: ${formData.message}`,
-
-        // Metadata
-        source: "Website Contact Form",
-        form_type: "contact_form",
-        submitted_at: new Date().toISOString(),
-      }
-
-      console.log("Sending to CRM:", JSON.stringify(crmData, null, 2))
-
-      // Send to CRM webhook
-      const webhookUrl = process.env.NEXT_PUBLIC_GROUNDHOGG_WEBHOOK_CONTACT_URL
-      if (!webhookUrl) {
-        throw new Error("Webhook URL is not configured")
-      }
-
-      const response = await fetch(
-        webhookUrl,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            "User-Agent": "SolidSteelWebsite/1.0",
-          },
-          body: JSON.stringify(crmData),
+      // Submit via server-side API route (avoids CORS issues with CRM webhook)
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      )
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          projectType: formData.projectType,
+          message: formData.message,
+          recaptchaToken,
+        }),
+      })
+
+      const result = await response.json()
 
       if (!response.ok) {
-        const errorText = await response.text()
-        console.error("CRM webhook failed:", {
-          status: response.status,
-          statusText: response.statusText,
-          response: errorText,
-        })
-        throw new Error(`CRM submission failed: ${response.status}`)
+        throw new Error(result.message || "Failed to submit contact form")
       }
-
-      const responseText = await response.text()
-      console.log("CRM Success:", response.status, responseText)
 
       setIsSubmitted(true)
 
