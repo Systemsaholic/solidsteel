@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { MapPin, Phone, Mail, Clock } from "lucide-react"
+import { MapPin, Phone, Mail, Clock, CheckCircle, MailOpen } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -24,6 +24,7 @@ export function Contact() {
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target
@@ -106,10 +107,7 @@ export function Contact() {
       const responseText = await response.text()
       console.log("CRM Success:", response.status, responseText)
 
-      toast({
-        title: "Form submitted successfully!",
-        description: "We'll be in touch with you shortly.",
-      })
+      setIsSubmitted(true)
 
       // Reset form
       setFormData({
@@ -144,6 +142,38 @@ export function Contact() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
+          {isSubmitted ? (
+            <Card className="shadow-md h-full border-green-200 bg-green-50">
+              <CardContent className="p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center text-center h-full">
+                <CheckCircle className="text-green-600 mb-4" size={56} />
+                <h3 className="text-2xl sm:text-3xl font-bold text-green-800 mb-3">Message Received!</h3>
+                <p className="text-green-700 text-base sm:text-lg mb-6 max-w-md">
+                  Thank you for reaching out to Solid Steel Management. We've received your inquiry and our team is on it.
+                </p>
+                <div className="bg-white rounded-lg p-4 sm:p-5 mb-6 w-full max-w-md border border-green-200">
+                  <div className="flex items-center justify-center mb-3">
+                    <MailOpen className="text-primary mr-2" size={22} />
+                    <h4 className="font-semibold text-gray-800">What happens next?</h4>
+                  </div>
+                  <ul className="text-sm sm:text-base text-gray-600 space-y-2 text-left">
+                    <li className="flex items-start"><span className="text-green-600 font-bold mr-2">1.</span>Check your inbox for a confirmation email</li>
+                    <li className="flex items-start"><span className="text-green-600 font-bold mr-2">2.</span>Our team will review your project details</li>
+                    <li className="flex items-start"><span className="text-green-600 font-bold mr-2">3.</span>We'll reach out within 24 hours to discuss next steps</li>
+                  </ul>
+                </div>
+                <p className="text-sm text-gray-500 mb-4">
+                  Don't see our email? Check your spam folder or call us directly.
+                </p>
+                <Button
+                  onClick={() => setIsSubmitted(false)}
+                  variant="outline"
+                  className="border-green-600 text-green-700 hover:bg-green-600 hover:text-white"
+                >
+                  Send Another Message
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
           <Card className="shadow-md h-full">
             <CardContent className="p-4 sm:p-6 md:p-8">
               <h3 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">Send Us a Message</h3>
@@ -247,6 +277,7 @@ export function Contact() {
               </form>
             </CardContent>
           </Card>
+          )}
 
           <div className="space-y-6 sm:space-y-8">
             <Card className="bg-muted h-full">

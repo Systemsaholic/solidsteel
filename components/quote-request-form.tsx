@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "@/components/ui/use-toast"
 import { ImageUpload } from "@/components/image-upload"
-import { Calendar, Upload, Loader2, CheckCircle } from "lucide-react"
+import { Calendar, Upload, Loader2, CheckCircle, MailOpen } from "lucide-react"
 import { executeRecaptcha } from "@/lib/recaptcha"
 
 const quoteRequestSchema = z.object({
@@ -122,21 +122,31 @@ export function QuoteRequestForm() {
     return (
       <Card className="border-green-200 bg-green-50">
         <CardContent className="p-8 text-center">
-          <CheckCircle className="mx-auto text-green-600 mb-4" size={48} />
+          <CheckCircle className="mx-auto text-green-600 mb-4" size={56} />
           <h2 className="text-2xl font-bold text-green-800 mb-4">Quote Request Submitted Successfully!</h2>
           <p className="text-green-700 mb-6">
             Thank you for your interest in Solid Steel Management. We've received your project details and will review
-            them carefully. Our team will contact you within 48 hours to discuss your project and next steps.
+            them carefully.
           </p>
-          <div className="space-y-2 text-sm text-green-600">
-            <p>• Project review within 24 hours</p>
-            <p>• Initial consultation scheduling</p>
-            <p>• Detailed proposal delivery</p>
+          <div className="bg-white rounded-lg p-5 mb-6 inline-block w-full max-w-md border border-green-200">
+            <div className="flex items-center justify-center mb-3">
+              <MailOpen className="text-blue-900 mr-2" size={22} />
+              <h4 className="font-semibold text-gray-800">What happens next?</h4>
+            </div>
+            <ul className="text-sm text-gray-600 space-y-2 text-left">
+              <li className="flex items-start"><span className="text-green-600 font-bold mr-2">1.</span>Check your inbox for a confirmation email</li>
+              <li className="flex items-start"><span className="text-green-600 font-bold mr-2">2.</span>Our team will review your project details within 24 hours</li>
+              <li className="flex items-start"><span className="text-green-600 font-bold mr-2">3.</span>We'll reach out to schedule an initial consultation</li>
+              <li className="flex items-start"><span className="text-green-600 font-bold mr-2">4.</span>You'll receive a detailed proposal for your project</li>
+            </ul>
           </div>
+          <p className="text-sm text-gray-500 mb-4">
+            Don't see our email? Check your spam folder or call us directly at (613) 231-8639.
+          </p>
           <Button
             onClick={() => setIsSubmitted(false)}
             variant="outline"
-            className="mt-6 border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
+            className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
           >
             Submit Another Request
           </Button>

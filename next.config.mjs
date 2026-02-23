@@ -25,8 +25,7 @@ const nextConfig = {
         hostname: 'cdn.pixabay.com',
       },
     ],
-    // Temporarily disable optimization due to Vercel Authentication blocking image API
-    unoptimized: true,
+    formats: ['image/avif', 'image/webp'],
   },
 }
 
