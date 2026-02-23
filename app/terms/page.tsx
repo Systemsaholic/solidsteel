@@ -2,9 +2,10 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Solid Steel Management",
+  title: "Terms of Service",
   description:
     "Terms of service for the Solid Steel Management website. Review the terms and conditions governing your use of solidsteelmgt.ca.",
+  alternates: { canonical: "/terms" },
   openGraph: {
     title: "Terms of Service | Solid Steel Management",
     description:

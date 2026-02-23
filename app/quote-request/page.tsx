@@ -5,7 +5,8 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Request a Quote | Get Your Project Estimate",
   description:
-    "Request a detailed quote for your commercial construction project. Our team will review your requirements and provide a comprehensive proposal tailored to your needs.",
+    "Request a detailed quote for your commercial construction project. Our team will provide a comprehensive proposal tailored to your needs.",
+  alternates: { canonical: "/quote-request" },
   keywords: [
     "construction quote request",
     "commercial construction estimate",

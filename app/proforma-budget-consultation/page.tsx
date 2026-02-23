@@ -3,9 +3,10 @@ import { Calculator, FileText, Clock, TrendingUp, CheckCircle, DollarSign } from
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Proforma Budget Consultation | Construction Cost Planning",
+  title: "Proforma Budget Consultation | Cost Planning",
   description:
-    "Get detailed proforma budget analysis for your commercial construction project. Our experts provide comprehensive cost planning, financial projections, and budget optimization strategies.",
+    "Get proforma budget analysis for your commercial construction project. Expert cost planning, financial projections, and budget optimization.",
+  alternates: { canonical: "/proforma-budget-consultation" },
   keywords: [
     "proforma budget consultation",
     "construction cost planning",

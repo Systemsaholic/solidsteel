@@ -2,9 +2,10 @@ import { ProjectGallery } from "@/components/project-gallery"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Project Gallery | Complete Portfolio of Construction Projects",
+  title: "Project Gallery | Construction Portfolio",
   description:
-    "Explore our comprehensive gallery of commercial construction projects. Filter by category, search by technology, and discover our expertise across various project types.",
+    "Explore our gallery of commercial construction projects. Filter by category and discover our expertise across various project types.",
+  alternates: { canonical: "/projects/gallery" },
   keywords: [
     "construction project gallery",
     "commercial construction portfolio",

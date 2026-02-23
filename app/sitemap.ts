@@ -4,7 +4,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://solidsteelmgt.ca"
 
   // Main pages
-  const routes = ["", "/about", "/projects", "/contact", "/privacy-policy", "/terms"].map((route) => ({
+  const routes = [
+    "", "/about", "/contact", "/projects/gallery",
+    "/quote-request", "/proforma-budget-consultation",
+    "/privacy-policy", "/terms",
+  ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
@@ -13,12 +17,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Project pages
   const projects = [
-    "logistics-distribution-center",
-    "fleet-maintenance-facility",
-    "manufacturing-plant",
-    "cold-storage-warehouse",
-    "commercial-vehicle-showroom",
-    "food-processing-facility",
+    "greystone-village-retirement",
+    "embrun-ford-dealership",
+    "pro-xcavation-headquarters",
+    "marc-forget-transport-facility",
+    "candc-welding-completion",
   ].map((slug) => ({
     url: `${baseUrl}/projects/${slug}`,
     lastModified: new Date(),

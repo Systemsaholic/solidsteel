@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "About Us | Commercial Construction Experts",
   description:
     "Learn about Solid Steel Management, our history, values, and commitment to excellence in commercial steel construction.",
+  alternates: { canonical: "/about" },
   openGraph: {
     title: "About Solid Steel Management | Commercial Construction Experts",
     description: "Learn about our history, values, and commitment to excellence in commercial steel construction.",

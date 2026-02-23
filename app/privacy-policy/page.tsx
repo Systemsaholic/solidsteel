@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Solid Steel Management",
+  title: "Privacy Policy",
   description:
     "Privacy Policy for Solid Steel Management. Learn how we collect, use, and protect your personal information.",
+  alternates: { canonical: "/privacy-policy" },
   openGraph: {
     title: "Privacy Policy | Solid Steel Management",
     description:

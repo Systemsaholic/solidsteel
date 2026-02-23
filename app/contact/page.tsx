@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Contact Us | Get a Free Consultation",
   description:
     "Contact Solid Steel Management for a free consultation on your commercial construction project. Reach out to our team of experts today.",
+  alternates: { canonical: "/contact" },
   openGraph: {
     title: "Contact Solid Steel Management | Get a Free Consultation",
     description: "Contact our team for a free consultation on your commercial construction project.",

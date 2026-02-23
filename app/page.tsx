@@ -12,7 +12,8 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Solid Steel Management | Commercial Construction Specialists Ontario",
   description:
-    "Strength You Can Build On — Excellence in Commercial Construction. Design-build, project management, general contracting, and distressed project takeovers across Ontario since 2015.",
+    "Strength You Can Build On — Excellence in Commercial Construction. Design-build, general contracting, and distressed project takeovers across Ontario.",
+  alternates: { canonical: "/" },
   keywords: [
     "commercial construction contractor Ontario",
     "design-build commercial construction",
