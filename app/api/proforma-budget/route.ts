@@ -162,8 +162,13 @@ Attachments: ${validatedData.attachments?.length || 0} files uploaded`,
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
 
+      const webhookUrl = process.env.GROUNDHOGG_WEBHOOK_QUOTE_URL
+      if (!webhookUrl) {
+        throw new Error("GROUNDHOGG_WEBHOOK_QUOTE_URL is not configured")
+      }
+
       const crmResponse = await fetch(
-        "https://crm.solidsteelmgt.ca/wp-json/gh/v4/webhooks/4-webhook-listener?token=pPAI2Wm",
+        webhookUrl,
         {
           method: "POST",
           headers: {

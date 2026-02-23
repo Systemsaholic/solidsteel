@@ -75,8 +75,13 @@ export function Contact() {
       console.log("Sending to CRM:", JSON.stringify(crmData, null, 2))
 
       // Send to CRM webhook
+      const webhookUrl = process.env.NEXT_PUBLIC_GROUNDHOGG_WEBHOOK_CONTACT_URL
+      if (!webhookUrl) {
+        throw new Error("Webhook URL is not configured")
+      }
+
       const response = await fetch(
-        "https://crm.solidsteelmgt.ca/wp-json/gh/v4/webhooks/1-webhook-listener?token=O3MSR63",
+        webhookUrl,
         {
           method: "POST",
           headers: {
