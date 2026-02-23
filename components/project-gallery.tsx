@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Search, Filter, Grid, List, MapPin, Calendar, Clock, Star, Loader2 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -333,14 +334,17 @@ function ProjectListCard({ project, onNavigate }: ProjectListCardProps) {
               </div>
             </div>
           ) : imageSource ? (
-            <img
-              src={imageSource}
-              alt={project.title}
-              width={400}
-              height={300}
-              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-              loading="lazy"
-            />
+            <div className="relative w-full h-full min-h-[192px]">
+              <Image
+                src={imageSource}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover transition-transform duration-500 hover:scale-105"
+                loading="lazy"
+                quality={75}
+              />
+            </div>
           ) : (
             <div className="w-full h-full bg-gray-100 flex items-center justify-center">
               <span className="text-gray-500">No image available</span>

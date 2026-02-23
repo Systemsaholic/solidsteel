@@ -41,14 +41,14 @@ export function Hero() {
             muted
             loop
             playsInline
-            preload="auto"
+            preload="none"
             className="absolute inset-0 w-full h-full object-cover opacity-40"
             onError={handleVideoError}
             onLoadedData={handleVideoLoaded}
             aria-hidden="true"
+            poster="/images/hero-bg.png"
           >
             <source src={blobVideoSrc} type="video/mp4" />
-            {/* Fallback to free stock video if blob video fails */}
             <source src={fallbackVideoSrc} type="video/mp4" />
             Your browser does not support the video tag.
           </video>

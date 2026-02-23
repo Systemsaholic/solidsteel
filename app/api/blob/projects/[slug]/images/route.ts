@@ -36,11 +36,14 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
         size: blob.size,
       }))
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       images,
       count: images.length,
     })
+    // Cache for 1 hour — image list rarely changes
+    response.headers.set("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=86400")
+    return response
   } catch (error) {
     console.error("Error fetching project images:", error)
     return NextResponse.json({ error: "Failed to fetch project images" }, { status: 500 })

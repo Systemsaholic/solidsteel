@@ -1,8 +1,8 @@
 "use client"
 
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { useProjectImages } from "@/hooks/useProjectImages"
-import { ResilientImage } from "@/components/resilient-image"
 import type { Project } from "@/data/projects"
 import { Button } from "@/components/ui/button"
 import { projectHasCaseStudy } from "@/lib/case-studies"
@@ -27,14 +27,14 @@ export function EnhancedProjectCard({ project, onNavigate }: EnhancedProjectCard
         {isLoading ? (
           <div className="w-full h-full bg-gray-200 animate-pulse" />
         ) : (
-          <ResilientImage
+          <Image
             src={imageSource}
             alt={project.title}
-            width={600}
-            height={400}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
-            fallbackSrc="/placeholder.svg?height=400&width=600&query=construction project"
+            quality={75}
           />
         )}
         {/* Status badge */}
