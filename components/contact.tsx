@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { MapPin, Phone, Mail, Clock, CheckCircle, MailOpen } from "lucide-react"
+import { MapPin, Phone, Mail, Clock, CheckCircle, MailOpen, AlertCircle } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -25,6 +25,7 @@ export function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target
@@ -38,6 +39,7 @@ export function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitError(false)
 
     try {
       // Honeypot check
@@ -89,11 +91,7 @@ export function Contact() {
       })
     } catch (error) {
       console.error("Error submitting contact form:", error)
-      toast({
-        title: "Something went wrong",
-        description: "Please try again or call us directly at (613) 231-8639.",
-        variant: "destructive",
-      })
+      setSubmitError(true)
     } finally {
       setIsSubmitting(false)
     }
@@ -111,7 +109,36 @@ export function Contact() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
-          {isSubmitted ? (
+          {submitError ? (
+            <Card className="shadow-md h-full border-red-200 bg-red-50">
+              <CardContent className="p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center text-center h-full">
+                <AlertCircle className="text-red-600 mb-4" size={56} />
+                <h3 className="text-2xl sm:text-3xl font-bold text-red-800 mb-3">Something Went Wrong</h3>
+                <p className="text-red-700 text-base sm:text-lg mb-6 max-w-md">
+                  We were unable to send your message. This may be a temporary issue — please try again in a few minutes.
+                </p>
+                <div className="bg-white rounded-lg p-4 sm:p-5 mb-6 w-full max-w-md border border-red-200">
+                  <h4 className="font-semibold text-gray-800 mb-3">You can also reach us directly:</h4>
+                  <div className="text-sm sm:text-base text-gray-600 space-y-2">
+                    <p className="flex items-center justify-center">
+                      <Phone className="mr-2 text-primary" size={18} />
+                      <a href="tel:+16132318639" className="font-semibold text-primary hover:underline">(613) 231-8639</a>
+                    </p>
+                    <p className="flex items-center justify-center">
+                      <Mail className="mr-2 text-primary" size={18} />
+                      <a href="mailto:info@solidsteelmgt.ca" className="font-semibold text-primary hover:underline">info@solidsteelmgt.ca</a>
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => setSubmitError(false)}
+                  className="w-full max-w-xs"
+                >
+                  Try Again
+                </Button>
+              </CardContent>
+            </Card>
+          ) : isSubmitted ? (
             <Card className="shadow-md h-full border-green-200 bg-green-50">
               <CardContent className="p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center text-center h-full">
                 <CheckCircle className="text-green-600 mb-4" size={56} />

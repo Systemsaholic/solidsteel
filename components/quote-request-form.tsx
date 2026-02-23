@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "@/components/ui/use-toast"
 import { ImageUpload } from "@/components/image-upload"
-import { Calendar, Upload, Loader2, CheckCircle, MailOpen } from "lucide-react"
+import { Calendar, Upload, Loader2, CheckCircle, MailOpen, AlertCircle, Phone, Mail } from "lucide-react"
 import { executeRecaptcha } from "@/lib/recaptcha"
 
 const quoteRequestSchema = z.object({
@@ -35,6 +35,7 @@ type QuoteRequestFormData = z.infer<typeof quoteRequestSchema>
 export function QuoteRequestForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([])
   const [honeypot, setHoneypot] = useState("")
 
@@ -57,6 +58,7 @@ export function QuoteRequestForm() {
 
   const onSubmit = async (data: QuoteRequestFormData) => {
     setIsSubmitting(true)
+    setSubmitError(false)
 
     try {
       // Honeypot check
@@ -108,14 +110,43 @@ export function QuoteRequestForm() {
       }
     } catch (error) {
       console.error("Error submitting quote request:", error)
-      toast({
-        title: "Submission failed",
-        description: "Please try again or contact us directly at (613) 231-8639.",
-        variant: "destructive",
-      })
+      setSubmitError(true)
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  if (submitError) {
+    return (
+      <Card className="border-red-200 bg-red-50">
+        <CardContent className="p-8 text-center">
+          <AlertCircle className="mx-auto text-red-600 mb-4" size={56} />
+          <h2 className="text-2xl font-bold text-red-800 mb-4">Something Went Wrong</h2>
+          <p className="text-red-700 mb-6">
+            We were unable to submit your quote request. This may be a temporary issue — please try again in a few minutes.
+          </p>
+          <div className="bg-white rounded-lg p-5 mb-6 inline-block w-full max-w-md border border-red-200">
+            <h4 className="font-semibold text-gray-800 mb-3">You can also reach us directly:</h4>
+            <div className="text-sm text-gray-600 space-y-2">
+              <p className="flex items-center justify-center">
+                <Phone className="mr-2 text-blue-900" size={18} />
+                <a href="tel:+16132318639" className="font-semibold text-blue-900 hover:underline">(613) 231-8639</a>
+              </p>
+              <p className="flex items-center justify-center">
+                <Mail className="mr-2 text-blue-900" size={18} />
+                <a href="mailto:info@solidsteelmgt.ca" className="font-semibold text-blue-900 hover:underline">info@solidsteelmgt.ca</a>
+              </p>
+            </div>
+          </div>
+          <Button
+            onClick={() => setSubmitError(false)}
+            className="w-full max-w-xs bg-blue-900 hover:bg-blue-800 text-white"
+          >
+            Try Again
+          </Button>
+        </CardContent>
+      </Card>
+    )
   }
 
   if (isSubmitted) {
