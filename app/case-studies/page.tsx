@@ -69,7 +69,7 @@ export default function CaseStudiesPage() {
                 return (
                   <Card key={caseStudy.id} className="overflow-hidden hover:shadow-lg transition duration-300">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                      <div className="h-80 lg:h-auto overflow-hidden">
+                      <div className="relative h-80 lg:h-auto overflow-hidden">
                         <CaseStudyImage caseStudy={caseStudy} size="large" />
                       </div>
                       <CardContent className="p-8 flex flex-col justify-center">
@@ -123,7 +123,7 @@ export default function CaseStudiesPage() {
                 const project = getProjectBySlug(caseStudy.projectSlug)
                 return (
                   <Card key={caseStudy.id} className="overflow-hidden hover:shadow-lg transition duration-300">
-                    <div className="h-48 overflow-hidden">
+                    <div className="relative h-48 overflow-hidden">
                       <CaseStudyImage caseStudy={caseStudy} size="small" />
                     </div>
                     <CardContent className="p-6">
