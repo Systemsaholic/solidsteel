@@ -156,19 +156,19 @@ export default function AboutPage() {
               {[
                 {
                   name: "Pro-X Excavation",
-                  logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-ogEU1nFvLZHA8g7ZyWT2sphQfGTPDV.png",
+                  logo: "/images/partners/pro-x-excavation.png",
                 },
                 {
                   name: "Domination Steel",
-                  logo: "https://dominationsteelerectors.com/wp-content/themes/Untitled4/images/20ffecfe52379ed59424ab2a30cd352d_logonoir.png",
+                  logo: "/images/partners/domination-steel.png",
                 },
                 {
                   name: "Matte Forming",
-                  logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-05-23%20at%201.36.13%E2%80%AFPM-Z0OypS9HENENwS5weMDon1o58UlTEg.png",
+                  logo: "/images/partners/matte-forming.png",
                 },
                 {
                   name: "Maxi Power Electrical",
-                  logo: "https://static.wixstatic.com/media/33c230_5d2be731afbf4411acacda9222d267ef.jpg/v1/crop/x_9,y_0,w_598,h_200/fill/w_544,h_182,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/33c230_5d2be731afbf4411acacda9222d267ef.jpg",
+                  logo: "/images/partners/maxi-power.jpg",
                 },
               ].map((partner, index) => (
                 <div key={index} className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
@@ -207,11 +207,11 @@ export default function AboutPage() {
                 {[
                   {
                     name: "BDC",
-                    logo: "/bdc-logo.png",
+                    logo: "/images/partners/bdc.png",
                   },
                   {
                     name: "National Bank of Canada",
-                    logo: "/placeholder-logo.png",
+                    logo: "/images/partners/national-bank.png",
                   },
                 ].map((partner, index) => (
                   <div key={index} className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center">
