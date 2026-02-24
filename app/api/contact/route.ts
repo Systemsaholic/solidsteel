@@ -27,7 +27,7 @@ export async function POST(request: Request) {
 
       // Honeypot check
       if (formData.get("company_url") || formData.get("website")) {
-        return NextResponse.redirect(new URL("/contact?submitted=true", request.url))
+        return NextResponse.redirect(new URL("/contact/thank-you", request.url), 303)
       }
 
       name = (formData.get("name") as string) || ""
