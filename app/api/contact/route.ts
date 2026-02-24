@@ -1,27 +1,46 @@
 import { NextResponse } from "next/server"
-import { verifyRecaptcha } from "@/lib/recaptcha"
 
 export async function POST(request: Request) {
   try {
-    const data = await request.json()
+    const contentType = request.headers.get("content-type") || ""
 
-    // Honeypot check - reject if filled
-    if (data.company_url || data.website) {
-      return NextResponse.json({ success: true, message: "Contact form submitted successfully" }, { status: 200 })
-    }
+    let name: string, email: string, phone: string, projectType: string, message: string
+    let isNativeFormSubmit = false
 
-    // Verify reCAPTCHA if token provided (soft check — honeypot is primary defense)
-    if (data.recaptchaToken) {
-      const recaptchaResult = await verifyRecaptcha(data.recaptchaToken)
-      if (!recaptchaResult.success) {
-        console.warn("reCAPTCHA verification failed — allowing submission (honeypot passed)")
+    if (contentType.includes("application/json")) {
+      const data = await request.json()
+
+      // Honeypot check
+      if (data.company_url || data.website) {
+        return NextResponse.json({ success: true, message: "Contact form submitted successfully" }, { status: 200 })
       }
-    }
 
-    // Validate form data
-    const { name, email, phone, projectType, message } = data
+      name = data.name
+      email = data.email
+      phone = data.phone
+      projectType = data.projectType || ""
+      message = data.message
+    } else {
+      // Native form submission (form-encoded data)
+      isNativeFormSubmit = true
+      const formData = await request.formData()
+
+      // Honeypot check
+      if (formData.get("company_url") || formData.get("website")) {
+        return NextResponse.redirect(new URL("/contact?submitted=true", request.url))
+      }
+
+      name = (formData.get("name") as string) || ""
+      email = (formData.get("email") as string) || ""
+      phone = (formData.get("phone") as string) || ""
+      projectType = (formData.get("projectType") as string) || ""
+      message = (formData.get("message") as string) || ""
+    }
 
     if (!name || !email || !phone || !message) {
+      if (isNativeFormSubmit) {
+        return NextResponse.redirect(new URL("/contact?error=missing-fields", request.url))
+      }
       return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 })
     }
 
@@ -65,6 +84,11 @@ export async function POST(request: Request) {
       }
     } catch (fetchError) {
       console.error("CRM webhook error:", fetchError instanceof Error ? fetchError.message : "Network error")
+    }
+
+    // For native form submissions, redirect to success page
+    if (isNativeFormSubmit) {
+      return NextResponse.redirect(new URL("/contact?submitted=true", request.url))
     }
 
     return NextResponse.json(

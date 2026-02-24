@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { MapPin, Phone, Mail, Clock, CheckCircle, MailOpen, AlertCircle } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -25,6 +25,16 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState(false)
+
+  // Handle native form submission redirect (when JS hydration fails)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get("submitted") === "true") {
+      setIsSubmitted(true)
+      // Clean up URL without reload
+      window.history.replaceState({}, "", window.location.pathname)
+    }
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target
@@ -168,12 +178,13 @@ export function Contact() {
           <Card className="shadow-md h-full">
             <CardContent className="p-4 sm:p-6 md:p-8">
               <h3 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">Send Us a Message</h3>
-              <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
+              <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit} action="/api/contact" method="POST">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="name">Full Name</Label>
                     <Input
                       id="name"
+                      name="name"
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="John Doe"
@@ -186,6 +197,7 @@ export function Contact() {
                     <Label htmlFor="email">Email Address</Label>
                     <Input
                       id="email"
+                      name="email"
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
@@ -201,6 +213,7 @@ export function Contact() {
                   <Label htmlFor="phone">Phone Number</Label>
                   <Input
                     id="phone"
+                    name="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
@@ -213,7 +226,7 @@ export function Contact() {
 
                 <div className="space-y-2">
                   <Label htmlFor="projectType">Project Type</Label>
-                  <Select value={formData.projectType} onValueChange={handleSelectChange}>
+                  <Select value={formData.projectType} onValueChange={handleSelectChange} name="projectType">
                     <SelectTrigger id="projectType" className="focus-visible h-10 sm:h-12">
                       <SelectValue placeholder="Select Project Type" />
                     </SelectTrigger>
@@ -233,6 +246,7 @@ export function Contact() {
                   <Label htmlFor="message">Project Details</Label>
                   <Textarea
                     id="message"
+                    name="message"
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Tell us about your project requirements..."
