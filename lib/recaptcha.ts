@@ -1,22 +1,24 @@
 declare global {
   interface Window {
     grecaptcha: {
-      ready: (callback: () => void) => void
-      execute: (siteKey: string, options: { action: string }) => Promise<string>
+      enterprise: {
+        ready: (callback: () => void) => void
+        execute: (siteKey: string, options: { action: string }) => Promise<string>
+      }
     }
   }
 }
 
 export async function executeRecaptcha(action: string): Promise<string | null> {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
-  if (!siteKey || typeof window === "undefined" || !window.grecaptcha) {
+  if (!siteKey || typeof window === "undefined" || !window.grecaptcha?.enterprise) {
     return null
   }
 
   return new Promise((resolve) => {
-    window.grecaptcha.ready(async () => {
+    window.grecaptcha.enterprise.ready(async () => {
       try {
-        const token = await window.grecaptcha.execute(siteKey, { action })
+        const token = await window.grecaptcha.enterprise.execute(siteKey, { action })
         resolve(token)
       } catch {
         resolve(null)

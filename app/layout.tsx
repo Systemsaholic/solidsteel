@@ -61,7 +61,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#0098DA" />
         {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
           <script
-            src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+            src={`https://www.google.com/recaptcha/enterprise.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
             async
             defer
           />
