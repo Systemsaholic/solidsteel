@@ -13,7 +13,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "@/components/ui/use-toast"
 import { ImageUpload } from "@/components/image-upload"
 import { Calendar, Upload, Loader2, CheckCircle, MailOpen, AlertCircle, Phone, Mail } from "lucide-react"
-import { executeRecaptcha } from "@/lib/recaptcha"
 
 const quoteRequestSchema = z.object({
   projectName: z.string().min(2, "Project name must be at least 2 characters"),
@@ -68,17 +67,11 @@ export function QuoteRequestForm() {
         return
       }
 
-      // Get reCAPTCHA token
-      const recaptchaToken = await executeRecaptcha("quote_request")
-
       const formData = {
         ...data,
         attachments: uploadedFiles,
         submittedAt: new Date().toISOString(),
-        recaptchaToken,
       }
-
-      console.log("Submitting form data:", formData)
 
       const response = await fetch("/api/quote-request", {
         method: "POST",

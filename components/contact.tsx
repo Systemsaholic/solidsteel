@@ -11,7 +11,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
-import { executeRecaptcha } from "@/lib/recaptcha"
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -53,10 +52,7 @@ export function Contact() {
         return
       }
 
-      // Get reCAPTCHA token
-      const recaptchaToken = await executeRecaptcha("contact_form")
-
-      // Submit via server-side API route (avoids CORS issues with CRM webhook)
+      // Submit via server-side API route
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -68,7 +64,6 @@ export function Contact() {
           phone: formData.phone,
           projectType: formData.projectType,
           message: formData.message,
-          recaptchaToken,
         }),
       })
 

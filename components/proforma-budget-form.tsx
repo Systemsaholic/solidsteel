@@ -14,7 +14,6 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "@/components/ui/use-toast"
 import { ImageUpload } from "@/components/image-upload"
 import { Calendar, Upload, Loader2, CheckCircle, Calculator, MailOpen, AlertCircle, Phone, Mail } from "lucide-react"
-import { executeRecaptcha } from "@/lib/recaptcha"
 
 const proformaBudgetSchema = z.object({
   // Project Information
@@ -130,17 +129,11 @@ export function ProformaBudgetForm() {
         return
       }
 
-      // Get reCAPTCHA token
-      const recaptchaToken = await executeRecaptcha("proforma_budget")
-
       const formData = {
         ...data,
         attachments: uploadedFiles,
         submittedAt: new Date().toISOString(),
-        recaptchaToken,
       }
-
-      console.log("Submitting proforma budget form:", formData)
 
       const response = await fetch("/api/proforma-budget", {
         method: "POST",
