@@ -39,7 +39,7 @@ export async function POST(request: Request) {
 
     if (!name || !email || !phone || !message) {
       if (isNativeFormSubmit) {
-        return NextResponse.redirect(new URL("/contact?error=missing-fields", request.url))
+        return NextResponse.redirect(new URL("/contact?error=missing-fields", request.url), 303)
       }
       return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 })
     }
@@ -88,7 +88,7 @@ export async function POST(request: Request) {
 
     // For native form submissions, redirect to success page
     if (isNativeFormSubmit) {
-      return NextResponse.redirect(new URL("/contact?submitted=true", request.url))
+      return NextResponse.redirect(new URL("/contact/thank-you", request.url), 303)
     }
 
     return NextResponse.json(
