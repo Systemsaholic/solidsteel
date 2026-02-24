@@ -59,13 +59,9 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <meta name="theme-color" content="#0098DA" />
-        {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
-          <script
-            src={`https://www.google.com/recaptcha/enterprise.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
-            async
-            defer
-          />
-        )}
+        {/* reCAPTCHA Enterprise disabled until domain is registered in Google Cloud Console.
+            The Enterprise script with render=SITE_KEY intercepts form submissions on unregistered domains.
+            Honeypot fields provide primary bot protection. Re-enable once solidsteelmgt.ca is added. */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
