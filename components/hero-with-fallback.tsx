@@ -34,9 +34,9 @@ export function Hero() {
   return (
     <section id="home" className="relative bg-gray-900 text-white min-h-screen flex items-center">
       <div className="absolute inset-0 overflow-hidden">
-        {/* Static background image - shows instantly */}
+        {/* Static background image - shows instantly, hides when video is ready */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+          className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${videoLoaded ? "opacity-0" : "opacity-40"}`}
           style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
           aria-hidden="true"
         />
