@@ -83,17 +83,9 @@ export function Contact() {
         throw new Error(result.message || "Failed to submit contact form")
       }
 
-      setIsSubmitted(true)
-
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        projectType: "",
-        message: "",
-        company_url: "",
-      })
+      // Redirect to thank-you page on success
+      window.location.href = "/contact/thank-you"
+      return
     } catch (error) {
       console.error("Error submitting contact form:", error)
       setSubmitError(true)
