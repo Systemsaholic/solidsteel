@@ -44,14 +44,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true, message: "Consultation request submitted successfully" }, { status: 200 })
     }
 
-    // Verify reCAPTCHA if token provided
+    // Verify reCAPTCHA if token provided (soft check — honeypot is primary defense)
     if (data.recaptchaToken) {
       const recaptchaResult = await verifyRecaptcha(data.recaptchaToken)
       if (!recaptchaResult.success) {
-        return NextResponse.json(
-          { success: false, message: "reCAPTCHA verification failed" },
-          { status: 403 },
-        )
+        console.warn("reCAPTCHA verification failed — allowing submission (honeypot passed)")
       }
     }
 
