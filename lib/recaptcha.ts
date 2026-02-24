@@ -1,30 +1,60 @@
 declare global {
   interface Window {
     grecaptcha: {
-      enterprise: {
+      enterprise?: {
         ready: (callback: () => void) => void
         execute: (siteKey: string, options: { action: string }) => Promise<string>
       }
+      ready?: (callback: () => void) => void
+      execute?: (siteKey: string, options: { action: string }) => Promise<string>
     }
   }
 }
 
 export async function executeRecaptcha(action: string): Promise<string | null> {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
-  if (!siteKey || typeof window === "undefined" || !window.grecaptcha?.enterprise) {
+  if (!siteKey || typeof window === "undefined" || !window.grecaptcha) {
+    console.warn("reCAPTCHA not available — skipping")
     return null
   }
 
-  return new Promise((resolve) => {
-    window.grecaptcha.enterprise.ready(async () => {
-      try {
-        const token = await window.grecaptcha.enterprise.execute(siteKey, { action })
-        resolve(token)
-      } catch {
-        resolve(null)
-      }
-    })
+  // Timeout after 5 seconds to prevent hanging
+  const timeoutPromise = new Promise<null>((resolve) => {
+    setTimeout(() => {
+      console.warn("reCAPTCHA timed out — skipping")
+      resolve(null)
+    }, 5000)
   })
+
+  const tokenPromise = new Promise<string | null>((resolve) => {
+    try {
+      // Try Enterprise API first, fall back to standard
+      const api = window.grecaptcha.enterprise || window.grecaptcha
+      if (!api?.ready) {
+        resolve(null)
+        return
+      }
+      api.ready(async () => {
+        try {
+          const execute = window.grecaptcha.enterprise?.execute || window.grecaptcha.execute
+          if (!execute) {
+            resolve(null)
+            return
+          }
+          const token = await execute(siteKey, { action })
+          resolve(token)
+        } catch (err) {
+          console.warn("reCAPTCHA execute failed:", err)
+          resolve(null)
+        }
+      })
+    } catch (err) {
+      console.warn("reCAPTCHA ready failed:", err)
+      resolve(null)
+    }
+  })
+
+  return Promise.race([tokenPromise, timeoutPromise])
 }
 
 export async function verifyRecaptcha(token: string): Promise<{ success: boolean; score: number }> {
