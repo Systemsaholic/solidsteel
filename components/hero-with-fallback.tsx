@@ -34,7 +34,15 @@ export function Hero() {
   return (
     <section id="home" className="relative bg-gray-900 text-white min-h-screen flex items-center">
       <div className="absolute inset-0 overflow-hidden">
-        {!videoError ? (
+        {/* Static background image - shows instantly */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+          style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
+          aria-hidden="true"
+        />
+
+        {/* Video overlay - fades in once loaded */}
+        {!videoError && (
           <video
             key={blobVideoSrc}
             autoPlay
@@ -42,22 +50,15 @@ export function Hero() {
             loop
             playsInline
             preload="metadata"
-            className="absolute inset-0 w-full h-full object-cover opacity-40"
+            className={`absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-1000 ${videoLoaded ? "opacity-40" : ""}`}
             onError={handleVideoError}
             onLoadedData={handleVideoLoaded}
             aria-hidden="true"
-            poster="/images/hero-bg.png"
           >
             <source src={blobVideoSrc} type="video/mp4" />
             <source src={fallbackVideoSrc} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-        ) : (
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
-            style={{ backgroundImage: "url('/images/hero-bg.png')" }}
-            aria-hidden="true"
-          />
         )}
         <div className="absolute inset-0 bg-black bg-opacity-30" />
       </div>

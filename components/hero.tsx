@@ -16,7 +16,7 @@ export function Hero() {
       <div className="absolute inset-0 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
-          style={{ backgroundImage: "url('/images/hero-bg.png')" }}
+          style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-black bg-opacity-30" />
