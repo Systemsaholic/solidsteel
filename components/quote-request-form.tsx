@@ -389,15 +389,15 @@ export function QuoteRequestForm() {
 
           {/* Honeypot field - hidden from real users */}
           <div className="absolute opacity-0 top-0 left-0 h-0 w-0 -z-10" aria-hidden="true">
-            <label htmlFor="quote_website">Website</label>
+            <label htmlFor="_hp_q">Do not fill this</label>
             <input
               type="text"
-              id="quote_website"
-              name="website"
+              id="_hp_q"
+              name="_hp_check"
               value={honeypot}
               onChange={(e) => setHoneypot(e.target.value)}
               tabIndex={-1}
-              autoComplete="off"
+              autoComplete="nope"
             />
           </div>
 

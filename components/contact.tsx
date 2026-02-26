@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { toast } from "@/components/ui/use-toast"
+
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -19,7 +19,7 @@ export function Contact() {
     phone: "",
     projectType: "",
     message: "",
-    company_url: "", // honeypot
+    _hp_check: "", // honeypot - intentionally obscure name to avoid browser autofill
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -51,14 +51,10 @@ export function Contact() {
     setSubmitError(false)
 
     try {
-      // Honeypot check
-      if (formData.company_url) {
-        // Silently "succeed" for bots
-        toast({
-          title: "Form submitted successfully!",
-          description: "We'll be in touch with you shortly.",
-        })
-        setFormData({ name: "", email: "", phone: "", projectType: "", message: "", company_url: "" })
+      // Honeypot check — silently "succeed" for bots
+      if (formData._hp_check) {
+        setIsSubmitted(true)
+        setFormData({ name: "", email: "", phone: "", projectType: "", message: "", _hp_check: "" })
         return
       }
 
@@ -83,8 +79,9 @@ export function Contact() {
         throw new Error(result.message || "Failed to submit contact form")
       }
 
-      // Redirect to thank-you page on success
-      window.location.href = "/contact/thank-you"
+      // Show inline success message
+      setIsSubmitted(true)
+      setFormData({ name: "", email: "", phone: "", projectType: "", message: "", _hp_check: "" })
       return
     } catch {
       setSubmitError(true)
@@ -250,15 +247,15 @@ export function Contact() {
 
                 {/* Honeypot field - hidden from real users */}
                 <div className="absolute opacity-0 top-0 left-0 h-0 w-0 -z-10" aria-hidden="true">
-                  <label htmlFor="company_url">Company URL</label>
+                  <label htmlFor="_hp_check">Do not fill this</label>
                   <input
                     type="text"
-                    id="company_url"
-                    name="company_url"
-                    value={formData.company_url}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, company_url: e.target.value }))}
+                    id="_hp_check"
+                    name="_hp_check"
+                    value={formData._hp_check}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, _hp_check: e.target.value }))}
                     tabIndex={-1}
-                    autoComplete="off"
+                    autoComplete="nope"
                   />
                 </div>
 

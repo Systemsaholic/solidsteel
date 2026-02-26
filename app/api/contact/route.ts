@@ -11,7 +11,7 @@ export async function POST(request: Request) {
       const data = await request.json()
 
       // Honeypot check
-      if (data.company_url || data.website) {
+      if (data.company_url || data.website || data._hp_check) {
         return NextResponse.json({ success: true, message: "Contact form submitted successfully" }, { status: 200 })
       }
 
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       const formData = await request.formData()
 
       // Honeypot check
-      if (formData.get("company_url") || formData.get("website")) {
+      if (formData.get("company_url") || formData.get("website") || formData.get("_hp_check")) {
         return NextResponse.redirect(new URL("/contact/thank-you", request.url), 303)
       }
 

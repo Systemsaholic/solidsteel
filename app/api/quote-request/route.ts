@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     const data = await request.json()
 
     // Honeypot check
-    if (data.website || data.company_url) {
+    if (data.website || data.company_url || data._hp_check) {
       return NextResponse.json({ success: true, message: "Quote request submitted successfully" }, { status: 200 })
     }
 
