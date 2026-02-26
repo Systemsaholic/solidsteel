@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server"
 import { z } from "zod"
-import { verifyRecaptcha } from "@/lib/recaptcha"
 
 const quoteRequestSchema = z.object({
   projectName: z.string().min(2).max(200),
@@ -26,14 +25,6 @@ export async function POST(request: Request) {
     // Honeypot check
     if (data.website || data.company_url) {
       return NextResponse.json({ success: true, message: "Quote request submitted successfully" }, { status: 200 })
-    }
-
-    // Verify reCAPTCHA if token provided (soft check — honeypot is primary defense)
-    if (data.recaptchaToken) {
-      const recaptchaResult = await verifyRecaptcha(data.recaptchaToken)
-      if (!recaptchaResult.success) {
-        console.warn("reCAPTCHA verification failed — allowing submission (honeypot passed)")
-      }
     }
 
     // Validate the data

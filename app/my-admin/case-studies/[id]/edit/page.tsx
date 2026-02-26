@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { use, useState, useEffect } from "react"
 import { CaseStudyForm } from "@/components/admin/case-study-form"
 import type { CaseStudy } from "@/data/case-studies"
 
-export default function EditCaseStudyPage({ params }: { params: { id: string } }) {
+export default function EditCaseStudyPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
   const [caseStudy, setCaseStudy] = useState<CaseStudy | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -14,7 +15,7 @@ export default function EditCaseStudyPage({ params }: { params: { id: string } }
 
   const fetchCaseStudy = async () => {
     try {
-      const response = await fetch(`/api/admin/case-studies/${params.id}`)
+      const response = await fetch(`/api/admin/case-studies/${id}`)
       if (response.ok) {
         const data = await response.json()
         setCaseStudy(data)

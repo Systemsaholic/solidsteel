@@ -144,8 +144,6 @@ export function ProformaBudgetForm() {
       })
 
       const result = await response.json()
-      console.log("API Response:", result)
-
       if (!response.ok) {
         throw new Error(result.message || "Failed to submit consultation request")
       }
@@ -161,12 +159,7 @@ export function ProformaBudgetForm() {
         description: "We'll review your requirements and contact you within 24 hours to schedule your consultation.",
       })
 
-      // Log debug info in development
-      if (process.env.NODE_ENV === "development" && result.debug) {
-        console.log("CRM Integration Status:", result.debug)
-      }
     } catch (error) {
-      console.error("Error submitting consultation request:", error)
       setSubmitError(true)
     } finally {
       setIsSubmitting(false)

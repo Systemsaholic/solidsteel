@@ -2,11 +2,12 @@ import { type NextRequest, NextResponse } from "next/server"
 import { requireAuth } from "@/lib/admin-auth"
 import { readCaseStudiesFile, writeCaseStudiesFile, generateSlug } from "@/lib/admin-data"
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireAuth()
+    const { id } = await params
     const caseStudies = await readCaseStudiesFile()
-    const caseStudy = caseStudies.find((cs) => cs.id === params.id)
+    const caseStudy = caseStudies.find((cs) => cs.id === id)
 
     if (!caseStudy) {
       return NextResponse.json({ error: "Case study not found" }, { status: 404 })
@@ -19,13 +20,14 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireAuth()
+    const { id } = await params
     const caseStudyData = await request.json()
     const caseStudies = await readCaseStudiesFile()
 
-    const caseStudyIndex = caseStudies.findIndex((cs) => cs.id === params.id)
+    const caseStudyIndex = caseStudies.findIndex((cs) => cs.id === id)
     if (caseStudyIndex === -1) {
       return NextResponse.json({ error: "Case study not found" }, { status: 404 })
     }
@@ -47,12 +49,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireAuth()
+    const { id } = await params
     const caseStudies = await readCaseStudiesFile()
 
-    const caseStudyIndex = caseStudies.findIndex((cs) => cs.id === params.id)
+    const caseStudyIndex = caseStudies.findIndex((cs) => cs.id === id)
     if (caseStudyIndex === -1) {
       return NextResponse.json({ error: "Case study not found" }, { status: 404 })
     }

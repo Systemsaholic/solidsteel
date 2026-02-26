@@ -82,8 +82,6 @@ export function QuoteRequestForm() {
       })
 
       const result = await response.json()
-      console.log("API Response:", result)
-
       if (!response.ok) {
         throw new Error(result.message || "Failed to submit quote request")
       }
@@ -97,12 +95,7 @@ export function QuoteRequestForm() {
         description: "We'll review your project details and contact you within 48 hours.",
       })
 
-      // Log debug info in development
-      if (process.env.NODE_ENV === "development" && result.debug) {
-        console.log("CRM Integration Status:", result.debug)
-      }
     } catch (error) {
-      console.error("Error submitting quote request:", error)
       setSubmitError(true)
     } finally {
       setIsSubmitting(false)

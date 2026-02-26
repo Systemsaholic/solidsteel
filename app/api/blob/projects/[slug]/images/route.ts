@@ -1,9 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { listBlobFiles } from "@/lib/blob"
 
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    const projectSlug = params.slug
+    const { slug: projectSlug } = await params
 
     // List all files in the project folder
     // Note: folder names are case-sensitive in blob storage

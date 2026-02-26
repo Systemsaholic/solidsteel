@@ -85,7 +85,7 @@ export default function AdminDashboard() {
             <CardTitle className="text-sm font-medium text-gray-600">Published Case Studies</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{caseStudyData.filter((cs) => cs.published).length}</div>
+            <div className="text-2xl font-bold">{caseStudyData.length}</div>
           </CardContent>
         </Card>
       </div>
@@ -143,7 +143,7 @@ export default function AdminDashboard() {
                 <div key={caseStudy.id} className="flex justify-between items-center py-2 border-b">
                   <div>
                     <div className="font-medium">{caseStudy.title}</div>
-                    <div className="text-sm text-gray-600">{caseStudy.published ? "Published" : "Draft"}</div>
+                    <div className="text-sm text-gray-600">{caseStudy.projectSlug}</div>
                   </div>
                   <Link href={`/my-admin/case-studies/${caseStudy.id}/edit`}>
                     <Button variant="outline" size="sm">

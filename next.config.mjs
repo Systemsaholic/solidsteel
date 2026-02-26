@@ -1,11 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     remotePatterns: [
       {
@@ -29,16 +23,17 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com https://vercel.live",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://vercel.live",
               "font-src 'self' https://fonts.gstatic.com https://vercel.live https://assets.vercel.com",
-              "img-src 'self' data: blob: https://vercel.live https://vercel.com https://5v8oej1w91asigpe.public.blob.vercel-storage.com https://hebbkx1anhila5yf.public.blob.vercel-storage.com",
-              "media-src 'self' https://5v8oej1w91asigpe.public.blob.vercel-storage.com https://cdn.pixabay.com",
-              "frame-src https://www.google.com https://www.gstatic.com https://vercel.live",
-              "connect-src 'self' https://www.google.com https://www.gstatic.com https://vercel.live wss://ws-us3.pusher.com https://5v8oej1w91asigpe.public.blob.vercel-storage.com https://hebbkx1anhila5yf.public.blob.vercel-storage.com",
+              "img-src 'self' data: blob: https://vercel.live https://vercel.com https://*.public.blob.vercel-storage.com",
+              "media-src 'self' https://*.public.blob.vercel-storage.com",
+              "frame-src https://vercel.live",
+              "connect-src 'self' https://vercel.live https://*.public.blob.vercel-storage.com",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
+              "upgrade-insecure-requests",
             ].join('; '),
           },
         ],

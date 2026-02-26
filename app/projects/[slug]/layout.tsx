@@ -3,12 +3,13 @@ import type { Metadata } from "next"
 import { getProjectBySlug } from "@/lib/projects"
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
   children: React.ReactNode
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = getProjectBySlug(params.slug)
+  const { slug } = await params
+  const project = getProjectBySlug(slug)
 
   if (!project) {
     return {
@@ -23,8 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `${project.category} construction`,
       "commercial construction project",
       "construction case study",
-      project.location && `construction ${project.location}`,
-    ].filter(Boolean),
+      ...(project.location ? [`construction ${project.location}`] : []),
+    ],
     openGraph: {
       title: `${project.title} | Solid Steel Management Project`,
       description: project.description,

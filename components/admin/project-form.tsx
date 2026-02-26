@@ -30,7 +30,6 @@ export function ProjectForm({ project, isEditing = false }: ProjectFormProps) {
     completionDate: project?.completionDate || "",
     client: project?.client || "",
     squareFootage: project?.squareFootage || "",
-    projectValue: project?.projectValue || "",
     duration: project?.duration || "",
     status: project?.status || "planned",
     year: project?.year || new Date().getFullYear(),
@@ -181,14 +180,6 @@ export function ProjectForm({ project, isEditing = false }: ProjectFormProps) {
                 id="squareFootage"
                 value={formData.squareFootage}
                 onChange={(e) => setFormData({ ...formData, squareFootage: e.target.value })}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="projectValue">Project Value</Label>
-              <Input
-                id="projectValue"
-                value={formData.projectValue}
-                onChange={(e) => setFormData({ ...formData, projectValue: e.target.value })}
               />
             </div>
             <div className="space-y-2">

@@ -2,11 +2,12 @@ import { type NextRequest, NextResponse } from "next/server"
 import { requireAuth } from "@/lib/admin-auth"
 import { readProjectsFile, writeProjectsFile, generateSlug } from "@/lib/admin-data"
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireAuth()
+    const { id } = await params
     const projects = await readProjectsFile()
-    const project = projects.find((p) => p.id === params.id)
+    const project = projects.find((p) => String(p.id) === id)
 
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 })
@@ -19,13 +20,14 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireAuth()
+    const { id } = await params
     const projectData = await request.json()
     const projects = await readProjectsFile()
 
-    const projectIndex = projects.findIndex((p) => p.id === params.id)
+    const projectIndex = projects.findIndex((p) => String(p.id) === id)
     if (projectIndex === -1) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 })
     }
@@ -47,12 +49,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await requireAuth()
+    const { id } = await params
     const projects = await readProjectsFile()
 
-    const projectIndex = projects.findIndex((p) => p.id === params.id)
+    const projectIndex = projects.findIndex((p) => String(p.id) === id)
     if (projectIndex === -1) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 })
     }

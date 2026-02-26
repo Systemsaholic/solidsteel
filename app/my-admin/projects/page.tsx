@@ -101,12 +101,6 @@ export default function AdminProjectsPage() {
                     {project.status}
                   </Badge>
                 </div>
-                {project.projectValue && (
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Value:</span>
-                    <span className="font-medium">{project.projectValue}</span>
-                  </div>
-                )}
                 <p className="text-sm text-gray-600 line-clamp-2">{project.description}</p>
                 <div className="flex items-center justify-between pt-2">
                   <div className="flex space-x-2">

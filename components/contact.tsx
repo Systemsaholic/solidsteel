@@ -86,8 +86,7 @@ export function Contact() {
       // Redirect to thank-you page on success
       window.location.href = "/contact/thank-you"
       return
-    } catch (error) {
-      console.error("Error submitting contact form:", error)
+    } catch {
       setSubmitError(true)
     } finally {
       setIsSubmitting(false)

@@ -22,13 +22,11 @@ export async function uploadToBlob(
   filename: string,
   options?: {
     access?: "public" | "private"
-    handleBlobUploadUrl?: string
   },
 ): Promise<UploadResult> {
   try {
     const blob = await put(filename, file, {
       access: options?.access || "public",
-      handleBlobUploadUrl: options?.handleBlobUploadUrl,
     })
 
     return {

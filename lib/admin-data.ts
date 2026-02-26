@@ -1,7 +1,7 @@
 import fs from "fs/promises"
 import path from "path"
-import type { Project } from "./projects"
-import type { CaseStudy } from "./case-studies"
+import type { Project } from "@/data/projects"
+import type { CaseStudy } from "@/data/case-studies"
 
 const projectsPath = path.join(process.cwd(), "data/projects.ts")
 const caseStudiesPath = path.join(process.cwd(), "data/case-studies.ts")

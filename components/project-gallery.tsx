@@ -236,7 +236,7 @@ export function ProjectGallery() {
 
                   {/* Featured Only */}
                   <div className="flex items-center space-x-2 pt-6">
-                    <Checkbox id="featured" checked={featuredOnly} onCheckedChange={setFeaturedOnly} />
+                    <Checkbox id="featured" checked={featuredOnly} onCheckedChange={(checked) => setFeaturedOnly(checked === true)} />
                     <label htmlFor="featured" className="text-sm font-medium">
                       Featured Projects Only
                     </label>

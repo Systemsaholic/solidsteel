@@ -108,17 +108,11 @@ export function getProjectStatistics() {
   const inProgressProjects = projects.filter((p) => p.status === "in-progress").length
   const featuredProjects = projects.filter((p) => p.featured).length
 
-  const totalValue = projects.reduce((sum, project) => {
-    const value = Number.parseFloat(project.projectValue?.replace(/[^\d.]/g, "") || "0")
-    return sum + value
-  }, 0)
-
   return {
     totalProjects,
     completedProjects,
     inProgressProjects,
     featuredProjects,
-    totalValue,
     categories: getProjectCategories().length,
     technologies: getAllTechnologies().length,
   }

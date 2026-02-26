@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { ArrowLeft, Calendar, MapPin, Building, Loader2, Expand } from "lucide-react"
@@ -13,13 +13,14 @@ import type { Project } from "@/data/projects"
 import { projectHasCaseStudy } from "@/lib/case-studies"
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export default function ProjectPage({ params }: Props) {
-  const [project, setProject] = useState<Project | null>(() => getProjectBySlug(params.slug) || null)
+  const { slug } = use(params)
+  const [project, setProject] = useState<Project | null>(() => getProjectBySlug(slug) || null)
   const [relatedProjects, setRelatedProjects] = useState<Project[]>(() => {
-    const p = getProjectBySlug(params.slug)
+    const p = getProjectBySlug(slug)
     return p ? getRelatedProjects(p.slug, 3) : []
   })
   const [isLoading, setIsLoading] = useState(false)
@@ -29,14 +30,14 @@ export default function ProjectPage({ params }: Props) {
   const router = useRouter()
 
   // Get dynamic images for this project from blob storage
-  const { heroImage, galleryImages, isLoading: imagesLoading, error: imagesError } = useProjectImages(params.slug)
+  const { heroImage, galleryImages, isLoading: imagesLoading, error: imagesError } = useProjectImages(slug)
 
   // Scroll to top and load project data when slug changes
   useEffect(() => {
     // Scroll to top immediately when navigating to a new project
     window.scrollTo({ top: 0, behavior: "smooth" })
     
-    const foundProject = getProjectBySlug(params.slug)
+    const foundProject = getProjectBySlug(slug)
 
     if (foundProject) {
       setProject(foundProject)
@@ -47,7 +48,7 @@ export default function ProjectPage({ params }: Props) {
     }
 
     setIsLoading(false)
-  }, [params.slug])
+  }, [slug])
 
   // Handle navigation with loading state
   const handleNavigation = (href: string) => {

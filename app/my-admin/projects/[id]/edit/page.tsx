@@ -1,10 +1,11 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { use, useState, useEffect } from "react"
 import { ProjectForm } from "@/components/admin/project-form"
 import type { Project } from "@/data/projects"
 
-export default function EditProjectPage({ params }: { params: { id: string } }) {
+export default function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
   const [project, setProject] = useState<Project | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -14,7 +15,7 @@ export default function EditProjectPage({ params }: { params: { id: string } }) 
 
   const fetchProject = async () => {
     try {
-      const response = await fetch(`/api/admin/projects/${params.id}`)
+      const response = await fetch(`/api/admin/projects/${id}`)
       if (response.ok) {
         const data = await response.json()
         setProject(data)

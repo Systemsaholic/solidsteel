@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Loader2, Expand } from "lucide-react"
@@ -22,17 +22,18 @@ import { CaseStudyTestimonials } from "@/components/case-study/case-study-testim
 import type { CaseStudy } from "@/data/case-studies"
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export default function CaseStudyPage({ params }: Props) {
+  const { slug } = use(params)
   const [isNavigating, setIsNavigating] = useState(false)
   const [galleryModalOpen, setGalleryModalOpen] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const router = useRouter()
-  
+
   // Get case study data directly without loading state
-  const caseStudy = getCaseStudyBySlug(params.slug)
+  const caseStudy = getCaseStudyBySlug(slug)
   const relatedCaseStudies = caseStudy ? getRelatedCaseStudies(caseStudy.slug, 3) : []
 
   const handleNavigation = (href: string) => {
