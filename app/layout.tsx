@@ -1,4 +1,5 @@
 import type React from "react"
+import Script from "next/script"
 import { Inter } from "next/font/google"
 import type { Metadata } from "next"
 import { Header } from "@/components/header"
@@ -56,6 +57,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-Y3Y9D5L2PT" strategy="afterInteractive" />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-Y3Y9D5L2PT');
+        `}
+      </Script>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <meta name="theme-color" content="#0098DA" />
