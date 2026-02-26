@@ -66,13 +66,12 @@ export function Hero() {
       <div className="relative container mx-auto px-4 py-12 sm:py-16 md:py-24 lg:py-32 z-10">
         <div className="max-w-4xl">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-blue-50 leading-tight">
-            Strength You Can Build On — Excellence in Commercial Construction
+            Ottawa&apos;s Trusted Commercial Construction Company
           </h1>
           <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 max-w-3xl text-white leading-relaxed">
-            At Solid Steel Management, our name reflects our commitment to delivering construction projects that are as
-            strong, resilient, and dependable as steel. Since 2015, we've been a trusted name in commercial construction
-            across the Ottawa Valley, known for our quality craftsmanship, on-time delivery, and tailored project
-            solutions.
+            Solid Steel Management is a general contractor serving Ottawa and Ontario since 2015. We deliver
+            design-build, steel construction, project management, and distressed project recovery for commercial and
+            industrial clients — with the strength, precision, and dependability our name stands for.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <Button

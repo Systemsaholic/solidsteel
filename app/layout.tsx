@@ -14,20 +14,20 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   metadataBase: new URL("https://solidsteelmgt.ca"),
   title: {
-    default: "Solid Steel Management | Commercial Construction Specialists Ontario",
+    default: "Solid Steel Management | Construction Company Ottawa | General Contractor",
     template: "%s | Solid Steel Management",
   },
   description:
-    "Strength You Can Build On — Excellence in Commercial Construction. Design-build, project management, general contracting, and distressed project takeovers across Ontario since 2015.",
+    "Ottawa's trusted construction company since 2015. General contracting, design-build, steel buildings, and project management for commercial and industrial projects across Ontario.",
   keywords: [
-    "commercial construction contractor Ontario",
+    "construction company Ottawa",
+    "general contractor Ottawa",
+    "commercial contractor Ottawa",
     "design-build commercial construction",
-    "distressed construction project takeover",
-    "general contracting services",
-    "industrial construction management",
-    "commercial renovation and expansion",
-    "Ottawa commercial builders",
-    "reliable construction project delivery",
+    "steel building Ontario",
+    "construction management Ottawa",
+    "commercial construction contractor Ontario",
+    "pre engineered steel buildings",
   ],
   authors: [{ name: "Solid Steel Management" }],
   creator: "Solid Steel Management",
@@ -80,7 +80,7 @@ export default function RootLayout({
               url: "https://solidsteelmgt.ca",
               logo: "https://solidsteelmgt.ca/logo.png",
               description:
-                "Excellence in Commercial Construction — Design-build, project management, general contracting, and distressed project takeovers across Ontario since 2015.",
+                "Ottawa construction company specializing in general contracting, design-build, steel buildings, project management, and distressed project recovery for commercial and industrial clients across Ontario since 2015.",
               telephone: "+1-613-231-8639",
               foundingDate: "2015",
               areaServed: {
@@ -96,9 +96,11 @@ export default function RootLayout({
               sameAs: [],
               knowsAbout: [
                 "Commercial Construction",
-                "Design-Build",
                 "General Contracting",
-                "Project Management",
+                "Design-Build",
+                "Construction Project Management",
+                "Steel Construction",
+                "Pre-Engineered Steel Buildings",
                 "Distressed Project Takeovers",
               ],
             }),

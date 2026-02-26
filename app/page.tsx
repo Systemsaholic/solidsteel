@@ -10,28 +10,26 @@ import { Contact } from "@/components/contact"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Solid Steel Management | Commercial Construction Specialists Ontario",
+  title: "Solid Steel Management | Construction Company Ottawa | General Contractor",
   description:
-    "Strength You Can Build On — Excellence in Commercial Construction. Design-build, general contracting, and distressed project takeovers across Ontario.",
+    "Ottawa's trusted construction company since 2015. General contracting, design-build, steel buildings, and project management for commercial and industrial projects across Ontario.",
   alternates: { canonical: "/" },
   keywords: [
-    "commercial construction contractor Ontario",
+    "construction company Ottawa",
+    "general contractor Ottawa",
+    "commercial contractor Ottawa",
     "design-build commercial construction",
+    "steel building Ontario",
+    "construction management Ottawa",
+    "commercial construction contractor Ontario",
+    "pre engineered steel buildings",
     "distressed construction project takeover",
-    "general contracting services",
     "industrial construction management",
-    "commercial renovation and expansion",
-    "Ottawa commercial builders",
-    "reliable construction project delivery",
-    "lender approved construction management",
-    "proforma budget construction delivery",
-    "construction loan compliance",
-    "financial institution construction partner",
   ],
   openGraph: {
-    title: "Solid Steel Management | Commercial Construction Specialists Ontario",
+    title: "Solid Steel Management | Construction Company Ottawa",
     description:
-      "Strength You Can Build On — Excellence in Commercial Construction. Design-build, project management, general contracting, and distressed project takeovers across Ontario since 2015.",
+      "Ottawa's trusted construction company since 2015. General contracting, design-build, steel buildings, and project management for commercial and industrial projects across Ontario.",
     url: "https://solidsteelmgt.ca",
     siteName: "Solid Steel Management",
     images: [
@@ -39,10 +37,10 @@ export const metadata: Metadata = {
         url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Solid Steel Management - Commercial Construction Specialists",
+        alt: "Solid Steel Management - Construction Company Ottawa",
       },
     ],
-    locale: "en_US",
+    locale: "en_CA",
     type: "website",
   },
 }
