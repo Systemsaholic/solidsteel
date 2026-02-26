@@ -108,7 +108,7 @@
 | **Structured Data** | GeneralContractor JSON-LD on all pages |
 | **Sitemap** | /sitemap.xml (auto-generated) |
 | **Robots** | /robots.txt (admin + API routes blocked) |
-| **Analytics** | Not yet configured |
+| **Analytics** | GA4: G-Y3Y9D5L2PT (gtag.js, afterInteractive) |
 
 ---
 
