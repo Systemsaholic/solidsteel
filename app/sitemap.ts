@@ -15,6 +15,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === "" ? 1 : 0.8,
   }))
 
+  // Case study pages
+  const caseStudies = [
+    "",
+    "/candc-welding-completion",
+  ].map((slug) => ({
+    url: `${baseUrl}/case-studies${slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: slug === "" ? 0.8 : 0.7,
+  }))
+
   // Project pages
   const projects = [
     "greystone-village-retirement",
@@ -29,5 +40,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  return [...routes, ...projects]
+  return [...routes, ...caseStudies, ...projects]
 }
