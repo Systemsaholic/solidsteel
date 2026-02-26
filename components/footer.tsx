@@ -56,20 +56,18 @@ export function Footer() {
             <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Our Services</h4>
             <ul className="space-y-2">
               {[
-                "Warehouse Construction",
-                "Commercial Garages",
-                "Industrial Buildings",
-                "General Contracting",
-                "Building Expansion",
-                "Facility Renovations",
+                { name: "General Contracting", href: "/services/general-contracting" },
+                { name: "Design-Build", href: "/services/design-build" },
+                { name: "Project Management", href: "/services/project-management" },
+                { name: "Steel Construction", href: "/services/steel-construction" },
+                { name: "Pre-Engineered Buildings", href: "/services/pre-engineered-buildings" },
               ].map((service) => (
-                <li key={service}>
+                <li key={service.name}>
                   <EnhancedLink
-                    href="/#services"
+                    href={service.href}
                     className="text-gray-400 hover:text-white transition duration-150 focus-visible text-sm sm:text-base py-1 block"
-                    scrollOffset={100}
                   >
-                    {service}
+                    {service.name}
                   </EnhancedLink>
                 </li>
               ))}

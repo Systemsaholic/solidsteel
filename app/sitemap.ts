@@ -15,6 +15,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === "" ? 1 : 0.8,
   }))
 
+  // Service pages
+  const servicePages = [
+    "/services",
+    "/services/general-contracting",
+    "/services/design-build",
+    "/services/project-management",
+    "/services/steel-construction",
+    "/services/pre-engineered-buildings",
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: route === "/services" ? 0.9 : 0.8,
+  }))
+
   // Case study pages
   const caseStudies = [
     "",
@@ -40,5 +55,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  return [...routes, ...caseStudies, ...projects]
+  return [...routes, ...servicePages, ...caseStudies, ...projects]
 }

@@ -22,6 +22,7 @@ export interface Project {
   year?: number
   featured?: boolean
   hasCaseStudy?: boolean
+  serviceSlugs?: string[]
 }
 
 export const projects: Project[] = [
@@ -38,6 +39,7 @@ export const projects: Project[] = [
     status: "completed",
     year: 2019,
     featured: true,
+    serviceSlugs: ["design-build", "general-contracting", "project-management"],
     technologies: ["Steel Frame", "Concrete", "HVAC Systems", "Accessibility Features"],
     tags: ["senior living", "accessibility", "healthcare", "community"],
     description:
@@ -76,6 +78,7 @@ export const projects: Project[] = [
     status: "completed",
     year: 2021,
     featured: true,
+    serviceSlugs: ["design-build", "general-contracting", "steel-construction"],
     technologies: ["Steel Structure", "Glass Curtain Wall", "LED Lighting", "Service Equipment"],
     tags: ["automotive", "retail", "showroom", "service center"],
     description:
@@ -110,6 +113,7 @@ export const projects: Project[] = [
     status: "completed",
     year: 2022,
     featured: false,
+    serviceSlugs: ["steel-construction", "pre-engineered-buildings", "general-contracting"],
     technologies: ["Heavy-Duty Flooring", "Crane Systems", "Industrial HVAC", "Security Systems"],
     tags: ["headquarters", "equipment storage", "maintenance", "corporate"],
     description:
@@ -144,6 +148,7 @@ export const projects: Project[] = [
     status: "completed",
     year: 2020,
     featured: false,
+    serviceSlugs: ["steel-construction", "pre-engineered-buildings", "general-contracting"],
     technologies: ["Loading Dock Systems", "Fuel Storage", "Fleet Management", "Logistics Software"],
     tags: ["transportation", "logistics", "fleet management", "cargo"],
     description:
@@ -178,6 +183,7 @@ export const projects: Project[] = [
     status: "completed",
     year: 2023,
     featured: true,
+    serviceSlugs: ["project-management", "general-contracting", "steel-construction"],
     technologies: ["Structural Remediation", "Welding Systems", "Safety Upgrades", "Code Compliance"],
     tags: ["distressed project", "takeover", "welding", "industrial", "recovery"],
     description:

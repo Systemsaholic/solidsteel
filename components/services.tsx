@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { Building2, ClipboardCheck, Hammer, Factory, TrendingUp, ShieldCheck } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -7,31 +8,37 @@ export function Services() {
       icon: <Building2 size={36} className="text-primary mb-4" />,
       title: "Design-Build & Development",
       description: "Integrated design and construction solutions for maximum efficiency and accountability.",
+      href: "/services/design-build",
     },
     {
       icon: <ClipboardCheck size={36} className="text-primary mb-4" />,
       title: "Construction Project Management",
       description: "Expert oversight that keeps your project on track, on time, and on budget.",
+      href: "/services/project-management",
     },
     {
       icon: <Hammer size={36} className="text-primary mb-4" />,
       title: "General Contracting",
       description: "Complete management of commercial builds from pre-construction to final turnover.",
+      href: "/services/general-contracting",
     },
     {
       icon: <Factory size={36} className="text-primary mb-4" />,
       title: "Industrial & Commercial Buildings",
       description: "Functional, high-performance spaces for warehouses, logistics, production, and more.",
+      href: "/services/steel-construction",
     },
     {
       icon: <TrendingUp size={36} className="text-primary mb-4" />,
       title: "Building Expansions & Renovations",
       description: "Customized solutions to grow or modernize your commercial space.",
+      href: "/services/general-contracting",
     },
     {
       icon: <ShieldCheck size={36} className="text-primary mb-4" />,
       title: "Turnaround Projects",
       description: "Strategic recovery and expert management to bring troubled builds back on track.",
+      href: "/case-studies",
     },
   ]
 
@@ -48,15 +55,17 @@ export function Services() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {services.map((service, index) => (
-            <Card key={index} className="card-hover h-full">
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex flex-col items-center text-center">
-                  <div className="mb-3 sm:mb-4">{service.icon}</div>
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 leading-tight">{service.title}</h3>
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{service.description}</p>
-                </div>
-              </CardContent>
-            </Card>
+            <Link key={index} href={service.href}>
+              <Card className="card-hover h-full">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="mb-3 sm:mb-4">{service.icon}</div>
+                    <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 leading-tight">{service.title}</h3>
+                    <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{service.description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
       </div>
