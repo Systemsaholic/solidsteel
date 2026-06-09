@@ -12,7 +12,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Solid Steel Management | Construction Company Ottawa | General Contractor",
   description:
-    "Ottawa's trusted construction company since 2015. General contracting, design-build, steel buildings, and project management for commercial and industrial projects across Ontario.",
+    "Ottawa construction company since 2015. General contracting, design-build, steel buildings, and project management for commercial and industrial projects.",
   alternates: { canonical: "/" },
   keywords: [
     "construction company Ottawa",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Solid Steel Management | Construction Company Ottawa",
     description:
-      "Ottawa's trusted construction company since 2015. General contracting, design-build, steel buildings, and project management for commercial and industrial projects across Ontario.",
+      "Ottawa construction company since 2015. General contracting, design-build, steel buildings, and project management for commercial and industrial projects.",
     url: "https://solidsteelmgt.ca",
     siteName: "Solid Steel Management",
     images: [

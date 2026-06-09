@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "@/components/ui/use-toast"
 import { ImageUpload } from "@/components/image-upload"
 import { Calendar, Upload, Loader2, CheckCircle, Calculator, MailOpen, AlertCircle, Phone, Mail } from "lucide-react"
+import { trackEvent } from "@/lib/gtag"
 
 const proformaBudgetSchema = z.object({
   // Project Information
@@ -148,6 +149,7 @@ export function ProformaBudgetForm() {
         throw new Error(result.message || "Failed to submit consultation request")
       }
 
+      trackEvent("generate_lead", { form_id: "proforma_budget" })
       setIsSubmitted(true)
       reset()
       setUploadedFiles([])

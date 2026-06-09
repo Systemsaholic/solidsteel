@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { getProjectBySlug } from "@/lib/projects"
+import { truncateDescription } from "@/lib/seo"
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -19,7 +20,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `${project.title} | Project Case Study`,
-    description: project.description,
+    description: truncateDescription(project.description),
+    alternates: { canonical: `/projects/${project.slug}` },
     keywords: [
       `${project.category} construction`,
       "commercial construction project",
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ],
     openGraph: {
       title: `${project.title} | Solid Steel Management Project`,
-      description: project.description,
+      description: truncateDescription(project.description),
       url: `https://solidsteelmgt.ca/projects/${project.slug}`,
       images: [
         {

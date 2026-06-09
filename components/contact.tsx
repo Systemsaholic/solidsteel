@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { trackEvent } from "@/lib/gtag"
 
 
 export function Contact() {
@@ -31,6 +32,7 @@ export function Contact() {
     const params = new URLSearchParams(window.location.search)
     if (params.get("submitted") === "true") {
       setIsSubmitted(true)
+      trackEvent("generate_lead", { form_id: "contact", method: "native_fallback" })
       // Clean up URL without reload
       window.history.replaceState({}, "", window.location.pathname)
     }
@@ -80,6 +82,7 @@ export function Contact() {
       }
 
       // Show inline success message
+      trackEvent("generate_lead", { form_id: "contact" })
       setIsSubmitted(true)
       setFormData({ name: "", email: "", phone: "", projectType: "", message: "", _hp_check: "" })
       return

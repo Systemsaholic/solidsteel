@@ -1,11 +1,27 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { preload } from "react-dom"
 import { scrollToElement } from "@/lib/scroll-utils"
 
 export function Hero() {
   const [videoError, setVideoError] = useState(false)
   const [videoLoaded, setVideoLoaded] = useState(false)
+  // Hold the video back until the page has loaded so it doesn't compete
+  // with the LCP background image for bandwidth on mobile.
+  const [showVideo, setShowVideo] = useState(false)
+
+  preload("/images/hero-bg.jpg", { as: "image", fetchPriority: "high" })
+
+  useEffect(() => {
+    if (document.readyState === "complete") {
+      setShowVideo(true)
+      return
+    }
+    const onLoad = () => setShowVideo(true)
+    window.addEventListener("load", onLoad)
+    return () => window.removeEventListener("load", onLoad)
+  }, [])
 
   const handleVideoError = () => {
     console.error("Video failed to load, falling back to image.")
@@ -42,7 +58,7 @@ export function Hero() {
         />
 
         {/* Video overlay - fades in once loaded */}
-        {!videoError && (
+        {!videoError && showVideo && (
           <video
             key={blobVideoSrc}
             autoPlay

@@ -15,6 +15,14 @@ export const metadata: Metadata = {
     description:
       "Full-service commercial construction — general contracting, design-build, project management, steel buildings, and more across Ontario.",
     url: "https://solidsteelmgt.ca/services",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Solid Steel Management",
+      },
+    ],
   },
 }
 

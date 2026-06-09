@@ -20,6 +20,14 @@ export const metadata: Metadata = {
     description: service.metaDescription,
     url: `https://solidsteelmgt.ca/services/${service.slug}`,
     type: "website",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Solid Steel Management",
+      },
+    ],
   },
 }
 
