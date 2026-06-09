@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { toast } from "@/components/ui/use-toast"
 import { ImageUpload } from "@/components/image-upload"
 import { Calendar, Upload, Loader2, CheckCircle, MailOpen, AlertCircle, Phone, Mail } from "lucide-react"
+import { trackEvent } from "@/lib/gtag"
 
 const quoteRequestSchema = z.object({
   projectName: z.string().min(2, "Project name must be at least 2 characters"),
@@ -86,6 +87,7 @@ export function QuoteRequestForm() {
         throw new Error(result.message || "Failed to submit quote request")
       }
 
+      trackEvent("generate_lead", { form_id: "quote_request" })
       setIsSubmitted(true)
       reset()
       setUploadedFiles([])

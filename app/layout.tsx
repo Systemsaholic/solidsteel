@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { ScrollToTopProvider } from "@/components/scroll-to-top-provider"
+import { ConversionTracking } from "@/components/conversion-tracking"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | Solid Steel Management",
   },
   description:
-    "Ottawa's trusted construction company since 2015. General contracting, design-build, steel buildings, and project management for commercial and industrial projects across Ontario.",
+    "Ottawa construction company since 2015. General contracting, design-build, steel buildings, and project management for commercial and industrial projects.",
   keywords: [
     "construction company Ottawa",
     "general contractor Ottawa",
@@ -78,8 +79,10 @@ export default function RootLayout({
               "@type": "GeneralContractor",
               "@id": "https://solidsteelmgt.ca/#organization",
               name: "Solid Steel Management",
+              alternateName: "SSM Solid Steel Management",
               url: "https://solidsteelmgt.ca",
               logo: "https://solidsteelmgt.ca/logo.png",
+              image: "https://solidsteelmgt.ca/images/og-image.png",
               description:
                 "Ottawa construction company specializing in general contracting, design-build, steel buildings, project management, and distressed project recovery for commercial and industrial clients across Ontario since 2015.",
               telephone: "+1-613-231-8639",
@@ -90,11 +93,19 @@ export default function RootLayout({
               },
               address: {
                 "@type": "PostalAddress",
-                addressLocality: "Ottawa",
-                addressRegion: "Ontario",
+                streetAddress: "2505 Pagé Rd",
+                addressLocality: "Orléans",
+                addressRegion: "ON",
+                postalCode: "K1W 1E5",
                 addressCountry: "CA",
               },
-              sameAs: [],
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 45.4403,
+                longitude: -75.523,
+              },
+              hasMap: "https://maps.google.com/?cid=6652741859787631566",
+              sameAs: ["https://maps.google.com/?cid=6652741859787631566"],
               knowsAbout: [
                 "Commercial Construction",
                 "General Contracting",
@@ -117,6 +128,7 @@ export default function RootLayout({
             <Toaster />
           </ScrollToTopProvider>
         </ThemeProvider>
+        <ConversionTracking />
         <Analytics />
       </body>
     </html>

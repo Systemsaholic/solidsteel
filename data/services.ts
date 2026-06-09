@@ -49,7 +49,7 @@ export const services: ServiceData[] = [
       "Complete management of commercial builds from pre-construction through final turnover — on time, on budget, and built to last.",
     metaTitle: "General Contractor Ottawa | Commercial Contracting Services",
     metaDescription:
-      "Solid Steel Management is a trusted general contractor in Ottawa specializing in commercial construction. Full-service contracting from pre-construction to turnover across Ontario.",
+      "Trusted general contractor in Ottawa specializing in commercial construction. Full-service contracting from pre-construction to turnover across Ontario.",
     keywords: [
       "general contractor Ottawa",
       "commercial contractor Ottawa",
@@ -155,7 +155,7 @@ export const services: ServiceData[] = [
       "One team, one vision — integrated design and construction that saves time, reduces risk, and delivers results.",
     metaTitle: "Design-Build Contractor Ottawa | Integrated Design & Construction",
     metaDescription:
-      "Solid Steel Management offers design-build services in Ottawa and Ontario. One team for design and construction — faster delivery, lower risk, and single-source accountability.",
+      "Design-build construction in Ottawa and Ontario. One team for design and build — faster delivery, lower risk, and single-source accountability.",
     keywords: [
       "design build Ottawa",
       "design build contractor Ontario",
@@ -256,7 +256,7 @@ export const services: ServiceData[] = [
       "Expert oversight that keeps your project on track, on time, and on budget — without the stress.",
     metaTitle: "Construction Project Management Ottawa | Expert Oversight Services",
     metaDescription:
-      "Construction project management services in Ottawa and Ontario. Solid Steel Management provides expert oversight, scheduling, budget control, and quality assurance for commercial builds.",
+      "Construction project management in Ottawa and Ontario. Expert oversight, scheduling, budget control, and quality assurance for commercial builds.",
     keywords: [
       "construction management Ottawa",
       "construction project management Ontario",
@@ -357,7 +357,7 @@ export const services: ServiceData[] = [
       "High-performance steel structures engineered for strength, speed, and long-term value.",
     metaTitle: "Steel Building Construction Ontario | Steel Structures & Erection",
     metaDescription:
-      "Steel building construction across Ontario. Solid Steel Management delivers commercial and industrial steel structures — warehouses, shops, and facilities built for performance.",
+      "Steel building construction across Ontario. Commercial and industrial steel structures — warehouses, shops, and facilities built for performance.",
     keywords: [
       "steel building Ontario",
       "steel building near me",
@@ -464,7 +464,7 @@ export const services: ServiceData[] = [
       "Factory-engineered, site-assembled — the fastest, most cost-effective way to build commercial and industrial space.",
     metaTitle: "Pre-Engineered Steel Buildings Canada | PEB Contractor Ontario",
     metaDescription:
-      "Pre-engineered steel buildings in Ontario and across Canada. Solid Steel Management delivers factory-engineered, site-assembled commercial and industrial buildings — fast, affordable, and durable.",
+      "Pre-engineered steel buildings in Ontario and across Canada. Factory-engineered, site-assembled commercial and industrial buildings — fast, affordable, durable.",
     keywords: [
       "pre engineered steel buildings",
       "steel buildings Canada",

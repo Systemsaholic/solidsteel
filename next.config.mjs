@@ -9,6 +9,16 @@ const nextConfig = {
     ],
     formats: ['image/avif', 'image/webp'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.solidsteelmgt.ca' }],
+        destination: 'https://solidsteelmgt.ca/:path*',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {
@@ -23,13 +33,13 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://www.googletagmanager.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://vercel.live",
               "font-src 'self' https://fonts.gstatic.com https://vercel.live https://assets.vercel.com",
-              "img-src 'self' data: blob: https://vercel.live https://vercel.com https://*.public.blob.vercel-storage.com https://www.googletagmanager.com",
+              "img-src 'self' data: blob: https://vercel.live https://vercel.com https://*.public.blob.vercel-storage.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.ca",
               "media-src 'self' https://*.public.blob.vercel-storage.com",
-              "frame-src https://vercel.live",
-              "connect-src 'self' https://vercel.live https://*.public.blob.vercel-storage.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com",
+              "frame-src https://vercel.live https://td.doubleclick.net https://www.googletagmanager.com",
+              "connect-src 'self' https://vercel.live https://*.public.blob.vercel-storage.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://td.doubleclick.net https://www.google.com https://www.google.ca",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",

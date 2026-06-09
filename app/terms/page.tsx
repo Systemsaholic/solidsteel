@@ -11,6 +11,14 @@ export const metadata: Metadata = {
     description:
       "Terms of service for the Solid Steel Management website. Review the terms and conditions governing your use of solidsteelmgt.ca.",
     url: "https://solidsteelmgt.ca/terms",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Solid Steel Management",
+      },
+    ],
   },
 }
 
